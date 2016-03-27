@@ -21,7 +21,8 @@ Then on windows:
   1. PLEASE do not commit or merge anything into the origin and your local repositories master branch. Instead, do the pull request directly on github or Jon will get mad ^-^. This is so your code can be reviewed before being merged. 
   2. If you create your own branch to do your own developments, please make sure to include a summary in your README.md so we know what the hell you are doing.
   3. Also, I am fairly new to git so don't feel bad if you're a newb because we are all newbs ^-^. 
-  4. That's it
+  4. Don't use git pull. Use the other way that Jon has taught u :3.
+  5. That's it
   
 Much mahalos and Aloha! :3
 <br><3<3<3<3<3<3
