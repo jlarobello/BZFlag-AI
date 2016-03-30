@@ -12,6 +12,7 @@ git clone https://github.com/jlarobello/ICS462-Shootout-Green-Team.git
 <br>
 Then on windows:
   1. Find your bzflag source directory and paste in the files (except for the README.md) into the bzflag directory.
+  2. Add dectree.cxx, dectree.h, AStarNode.cpp, AStarNode.h to existing items in Visual Studio bzflag.
   2. Make sure that you have applied all fixes from the [ICS 462 website](http://www2.hawaii.edu/~chin/462/Welcome.html).
   3. Make sure that you have included the [yagsbpl-2.1](https://github.com/subh83/YAGSBPL) library path in your bzflag project properties/VC++ Directories/Include Directories.
   4. Rebuild the solution to avoid unexpected errors.
