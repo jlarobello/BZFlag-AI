@@ -21,10 +21,10 @@ public:
 	AStarNode(const float location[3]);
 	AStarNode(int xi, int yi);
 	static bool isAccessible(int x, int y);
-	inline int AStarNode::getX(void) const { return x; }
-	inline int AStarNode::getY(void) const { return y; }
-	inline void AStarNode::setX(int newX) { x = newX; }
-	inline void AStarNode::setY(int newY) { y = newY; }
+inline int AStarNode::getX(void) const { return x; }
+inline int AStarNode::getY(void) const { return y; }
+inline void AStarNode::setX(int newX) { x = newX; }
+inline void AStarNode::setY(int newY) { y = newY; }
 	inline float AStarNode::getScaledX(void) const { return x * SCALE; }
 	inline float AStarNode::getScaledY(void) const { return y * SCALE; }
 private:

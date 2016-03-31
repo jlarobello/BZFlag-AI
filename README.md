@@ -1,6 +1,6 @@
 # BZFlag Green Team AI
 <br>
-Currently, the BZFlag bots use Jon's implementation for assignment 3 with Professor Chin's method pointer example. The plan is to make developments off of this current release.
+UPDATE: Changeg the code to Professor Chin's A3 solution. We will develop of of this.
 <br> 
 <br>
 **Installation:**

@@ -10,14 +10,14 @@
  * software licence.
  */
 
- /**
-  * @file
-  *
-  * Holds classes for making decisions based on a decision
-  * tree. Decision trees consist of a series of decisions, arranged so
-  * that the results of one decision lead to another, until finally a
-  * decision is reached at the end of the tree.
-  */
+/**
+ * @file
+ *
+ * Holds classes for making decisions based on a decision
+ * tree. Decision trees consist of a series of decisions, arranged so
+ * that the results of one decision lead to another, until finally a
+ * decision is reached at the end of the tree.
+ */
 #ifndef AICORE_DECTREE_H
 #define AICORE_DECTREE_H
 
@@ -86,46 +86,46 @@ namespace aicore
 
     /**
      * This class represents a decision given by the function pointer,
-     * ptr
+	 * ptr
      */
-    class DecisionPtr : public aicore::Decision
-    {
-    public:
-        /**
-        * This will hold the function pointer
-        */
-        bool (RobotPlayer::*decFuncPtr)(float dt);
+	class DecisionPtr : public aicore::Decision
+	{
+	public:
+		/**
+		* This will hold the function pointer
+		*/
+		bool (RobotPlayer::*decFuncPtr)(float dt);
 
         virtual DecisionTreeNode* makeDecision(RobotPlayer* bot, float dt);
-        virtual bool getBranch(RobotPlayer* bot, float dt);
-    };
+		virtual bool getBranch(RobotPlayer* bot, float dt);
+	};
 
-    /**
-    * This is a very simple action that just holds a function pointer
-    * to the actual action to run.
-    */
-    class ActionPtr : public aicore::DecisionTreeAction
-    {
-    public:
-        /**
-        * This will hold the function pointer
-        */
-        void (RobotPlayer::*actFuncPtr)(float dt);
-    };
+	/**
+	* This is a very simple action that just holds a function pointer
+	* to the actual action to run.
+	*/
+	class ActionPtr : public aicore::DecisionTreeAction
+	{
+	public:
+		/**
+		* This will hold the function pointer
+		*/
+		void (RobotPlayer::*actFuncPtr)(float dt);
+	};
 
-    class DecisionTrees
-    {
-    public:
-        static void init();
-        // Holds our list of decisions
-        static DecisionPtr doUpdateMotionDecisions[2];
-        static DecisionPtr shotDecisions[6];
-        static DecisionPtr dropFlagDecision[5];
-        // Holds our list of actions
-        static ActionPtr doUpdateMotionActions[3];
-        static ActionPtr shotActions[3];
-        static ActionPtr dropFlagActions[2];
-    };
+	class DecisionTrees
+	{
+	public:
+		static void init();
+		// Holds our list of decisions
+		static DecisionPtr doUpdateMotionDecisions[2];
+		static DecisionPtr doUpdateShootingDecisions[6];
+		static DecisionPtr doUpdateDropFlagDecisions[5];
+		// Holds our list of actions
+		static ActionPtr doUpdateMotionActions[3];
+		static ActionPtr doUpdateShootingActions[3];
+		static ActionPtr doUpdateDropFlagActions[2];
+	};
 
 }; // end of namespace
 
