@@ -1,6 +1,6 @@
 # BZFlag Green Team AI
 <br>
-UPDATE: Changeg the code to Professor Chin's A3 solution. We will develop of of this.
+UPDATE: Changed the code to Professor Chin's A3 solution. We will develop of of this.
 <br> 
 <br>
 **Installation:**
