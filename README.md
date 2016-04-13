@@ -24,6 +24,3 @@ Then on windows:
   3. Jon is fairly new to git so don't feel bad if you're a newb because we are all newbs ^-^. 
   4. Also, don't use git pull. Do it the smart way like Jon has taught you :3.
   5. That's it
-  
-Much mahalos and Aloha! :3
-<br><3<3<3<3<3<3
