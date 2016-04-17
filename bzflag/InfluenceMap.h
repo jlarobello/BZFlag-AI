@@ -5,7 +5,6 @@
 #include "playing.h"
 #include "RobotPlayer.h"
 
-#define SCALE BZDBCache::tankRadius;
 #define INF -5
 #define C -1
 
@@ -13,7 +12,7 @@ class InfluenceMap
 {
 public:
     InfluenceMap();
-    int getInfluence(int, int);
+    double getInfluence(float, float);
 private:
     int x, y;
 private:

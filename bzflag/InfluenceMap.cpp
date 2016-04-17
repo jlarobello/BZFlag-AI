@@ -5,13 +5,11 @@ InfluenceMap::InfluenceMap()
 
 }
 
-int InfluenceMap::getInfluence(int x, int y)
+double InfluenceMap::getInfluence(float x, float y)
 {
     float floatX, floatY, influence = 0;
 
-    floatX = x * SCALE;
-    floatY = y * SCALE;
-    const float nodePos[2] = { floatX, floatY };
+    const float nodePos[2] = { x, y };
 
     for (int i = 0; i <= World::getWorld()->getCurMaxPlayers(); i++)
     {
