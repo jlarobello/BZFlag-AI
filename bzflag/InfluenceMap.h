@@ -4,6 +4,8 @@
 #include "BZDBCache.h"
 #include "playing.h"
 #include "RobotPlayer.h"
+#include "Player.h"
+#include "global.h"
 
 #ifndef INFLUENCE_MAP_H
 #define INFLUENCE_MAP_H
@@ -15,7 +17,7 @@ class InfluenceMap
 {
 public:
     InfluenceMap();
-    double getInfluence(float, float);
+    float getInfluence(float, float);
 private:
     int x, y;
 private:

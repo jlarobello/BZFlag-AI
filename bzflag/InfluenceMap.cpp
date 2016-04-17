@@ -5,7 +5,7 @@ InfluenceMap::InfluenceMap()
 
 }
 
-double InfluenceMap::getInfluence(float x, float y)
+float InfluenceMap::getInfluence(float x, float y)
 {
     float influence = 0;
 
@@ -15,12 +15,18 @@ double InfluenceMap::getInfluence(float x, float y)
     {
         Player * p = NULL;
         const float * pos;   // p's position
-        double distance = 0; // distance between robot and node
+        float distance = 0; // distance between robot and node
+/*
+		if (i < World::getWorld()->getCurMaxPlayers())
+			p = World::getWorld()->getPlayer(i);
+		else
+			p = LocalPlayer::getMyTank();
+		*/
+		p = World::getWorld()->getPlayer(i);
 
-        p   = World::getWorld()->getPlayer(i);
-        pos = p->getPosition();
+		pos = p->getPosition();		
 
-        if (p->getTeam() != TeamColor::GreenTeam)
+        if (p != NULL && p->getTeam() != TeamColor::GreenTeam)
         {
             distance   = getDistance(pos, nodePos);
             influence += ((INF / distance) + 1);

@@ -92,7 +92,7 @@ void GraphFunctionContainer::getSuccessors(AStarNode& n, std::vector<AStarNode>*
 double GraphFunctionContainer::getHeuristics(AStarNode& n1, AStarNode& n2)
 {
     InfluenceMap * imap = new InfluenceMap();
-    double influence = imap->getInfluence(n1.getScaledX(), n2.getScaledY());
+    float influence = imap->getInfluence(n1.getScaledX(), n2.getScaledY());
 	// Euclidean distance as heuristics
 	return (hypotf(n2.getX() - n1.getX(), n2.getY() - n1.getY()) + influence);
 }
