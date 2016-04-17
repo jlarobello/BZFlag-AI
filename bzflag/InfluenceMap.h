@@ -5,6 +5,9 @@
 #include "playing.h"
 #include "RobotPlayer.h"
 
+#ifndef INFLUENCE_MAP_H
+#define INFLUENCE_MAP_H
+
 #define INF -5
 #define C -1
 
@@ -18,3 +21,5 @@ private:
 private:
     float getDistance(const float[2], const float[2]);
 };
+
+#endif

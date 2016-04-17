@@ -7,7 +7,7 @@ InfluenceMap::InfluenceMap()
 
 double InfluenceMap::getInfluence(float x, float y)
 {
-    float floatX, floatY, influence = 0;
+    float influence = 0;
 
     const float nodePos[2] = { x, y };
 
@@ -27,7 +27,7 @@ double InfluenceMap::getInfluence(float x, float y)
         }
     }
 
-    return (int)influence;
+    return influence;
 }
 
 float InfluenceMap::getDistance(const float pos1[2], const float pos2[2])

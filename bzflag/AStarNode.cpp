@@ -4,6 +4,7 @@
 #include "BZDBCache.h"
 #include "World.h"
 #include "playing.h" // needed for controlPanel
+#include "InfluenceMap.h"
 
 int GraphFunctionContainer::Xmin, GraphFunctionContainer::Xmax;
 int GraphFunctionContainer::Ymin, GraphFunctionContainer::Ymax;
@@ -90,8 +91,10 @@ void GraphFunctionContainer::getSuccessors(AStarNode& n, std::vector<AStarNode>*
 // returns the Euclidean distance of the AStarNode to the goalNode
 double GraphFunctionContainer::getHeuristics(AStarNode& n1, AStarNode& n2)
 {
+    InfluenceMap * imap = new InfluenceMap();
+    double influence = imap->getInfluence(n1.getScaledX(), n2.getScaledY());
 	// Euclidean distance as heuristics
-	return (hypotf(n2.getX() - n1.getX(), n2.getY() - n1.getY()));
+	return (hypotf(n2.getX() - n1.getX(), n2.getY() - n1.getY()) + influence);
 }
 
 // -------------------------------
