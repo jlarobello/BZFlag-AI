@@ -1,4 +1,11 @@
 #include "InfluenceMap.h"
+#include "AStarNode.h"
+#include <math.h>
+#include "common.h"
+#include "BZDBCache.h"
+#include "World.h"
+#include "playing.h" // needed for controlPanel
+#include "InfluenceMap.h"
 
 InfluenceMap::InfluenceMap()
 {
@@ -24,8 +31,10 @@ float InfluenceMap::getInfluence(float x, float y)
 		*/
 		p = World::getWorld()->getPlayer(i);
 
-		pos = p->getPosition();		
-
+		pos = p->getPosition();
+        char buffer[256];
+        sprintf(buffer, "Works: %f", World::getWorld()->getCurMaxPlayers());
+        controlPanel->addMessage(buffer);
         if (p != NULL && p->getTeam() != TeamColor::GreenTeam)
         {
             distance   = getDistance(pos, nodePos);
