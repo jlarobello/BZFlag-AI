@@ -17,6 +17,7 @@
 #ifndef	BZF_PLAYING_H
 #define	BZF_PLAYING_H
 
+#define HAVE_ISNAN
 #include "common.h"
 
 // system includes

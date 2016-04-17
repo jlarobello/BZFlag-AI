@@ -10,9 +10,10 @@
  * software licence.
  */
 #include <exception>
-#include "playing.h"
 #include "dectree.h"
 #define TRACE_DECTREE
+
+#include "playing.h"
 
 namespace aicore
 {

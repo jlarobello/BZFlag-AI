@@ -10,8 +10,6 @@
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-#define HAVE_ISNAN
-
 //#define TRACE2
 
 // interface header
