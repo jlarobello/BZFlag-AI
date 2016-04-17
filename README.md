@@ -1,6 +1,6 @@
 # BZFlag Green Team AI
 <br>
-Influence Map development
+Influence Map development for Jon. So i don't messup the influence-map branch...
 <br> 
 <br>
 **Installation:**
