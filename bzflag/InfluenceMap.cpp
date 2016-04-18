@@ -1,11 +1,4 @@
 #include "InfluenceMap.h"
-#include "AStarNode.h"
-#include <math.h>
-#include "common.h"
-#include "BZDBCache.h"
-#include "World.h"
-#include "playing.h" // needed for controlPanel
-#include "InfluenceMap.h"
 
 InfluenceMap::InfluenceMap()
 {
@@ -18,34 +11,26 @@ float InfluenceMap::getInfluence(float x, float y)
 
     const float nodePos[2] = { x, y };
 
-    for (int i = 0; i <= World::getWorld()->getCurMaxPlayers(); i++)
+    for (int i = 1; i <= World::getWorld()->getCurMaxPlayers(); i++)
     {
         Player * p = NULL;
         const float * pos;   // p's position
         float distance = 0; // distance between robot and node
-/*
-		if (i < World::getWorld()->getCurMaxPlayers())
-			p = World::getWorld()->getPlayer(i);
-		else
-			p = LocalPlayer::getMyTank();
-		*/
-		p = World::getWorld()->getPlayer(i);
 
-		pos = p->getPosition();
-        char buffer[256];
-        sprintf(buffer, "Works: %f", World::getWorld()->getCurMaxPlayers());
-        controlPanel->addMessage(buffer);
+		p = World::getWorld()->getPlayer(i);
+        
         if (p != NULL && p->getTeam() != TeamColor::GreenTeam)
         {
+            pos = p->getPosition();
             distance   = getDistance(pos, nodePos);
-            influence += ((INF / distance) + 1);
+            influence += ((INFL / distance) + 1);
         }
     }
 
     return influence;
 }
 
-float InfluenceMap::getDistance(const float pos1[2], const float pos2[2])
+float InfluenceMap::getDistance(const float pos1[3], const float pos2[3])
 {
     float pos[2];
     float distance = 0;
