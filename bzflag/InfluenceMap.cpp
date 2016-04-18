@@ -27,7 +27,7 @@ float InfluenceMap::getInfluence(float x, float y)
         }
     }
 
-    return influence;
+    return 0;
 }
 
 float InfluenceMap::getDistance(const float pos1[3], const float pos2[3])
