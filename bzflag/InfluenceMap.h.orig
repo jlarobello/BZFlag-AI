@@ -1,0 +1,37 @@
+#include <math.h>
+#include "World.h"
+#include "LocalPlayer.h"
+#include "BZDBCache.h"
+#include "playing.h"
+#include "RobotPlayer.h"
+
+<<<<<<< HEAD
+#define SCALE BZDBCache::tankRadius;
+=======
+#ifndef INFLUENCE_MAP_H
+#define INFLUENCE_MAP_H
+
+>>>>>>> a67a6a2059e3ae125ddf046793c293679f6a24a6
+#define INF -5
+#define C -1
+
+class InfluenceMap
+{
+public:
+    InfluenceMap();
+<<<<<<< HEAD
+    int getInfluence(int, int);
+=======
+    double getInfluence(float, float);
+>>>>>>> a67a6a2059e3ae125ddf046793c293679f6a24a6
+private:
+    int x, y;
+private:
+    float getDistance(const float[2], const float[2]);
+<<<<<<< HEAD
+};
+=======
+};
+
+#endif
+>>>>>>> a67a6a2059e3ae125ddf046793c293679f6a24a6

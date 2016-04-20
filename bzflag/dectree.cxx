@@ -147,4 +147,46 @@ namespace aicore
 	DecisionPtr DecisionTrees::doUpdateDropFlagDecisions[5];
 	ActionPtr DecisionTrees::doUpdateDropFlagActions[2];
 
+///////////////////////////////////////////////////////////////////////////
+/*
+	{
+		// actions
+		doNewActions[0].actFuncPtr = &RobotPlayer::doNothing;
+		doNewActions[1].actFuncPtr = &RobotPlayer::evade;
+		doNewActions[2].actFuncPtr = &World::defend;
+		doNewActions[3].actFuncPtr = &RobotPlayer::followPath;
+		doNewActions[4].actFuncPtr = &World::followLeader;
+		doNewActions[5].actFuncPtr = &World::setNewLeader;
+
+		// decision tree
+		doNewDecisions[0].decFuncPtr = &RobotPlayer::amAlive;
+		doNewDecisions[0].trueBranch = &doNewDecisions[1];
+		doNewDecisions[0].falseBranch = &doNewActions[0];
+
+		doNewDecisions[1].decFuncPtr = &RobotPlayer::shotComing;
+		doNewDecisions[1].trueBranch = &doNewActions[1];
+		doNewDecisions[1].falseBranch = &doNewDecisions[2];
+
+		doNewDecisions[2].decFuncPtr = &World::isAttacker;
+		doNewDecisions[2].trueBranch = &doNewDecisions[3];
+		doNewDecisions[2].falseBranch = &doNewActions[2];
+
+		doNewDecisions[3].decFuncPtr = &World::isLeader;
+		doNewDecisions[3].trueBranch = &doNewDecisions[4];
+		doNewDecisions[3].falseBranch = &doNewDecisions[5];
+
+		doNewDecisions[4].decFuncPtr = &World::haveFlag;
+		doNewDecisions[4].trueBranch = &doNewActions[3];
+		doNewDecisions[4].falseBranch = &doNewActions[3];
+
+		doNewDecisions[5].decFuncPtr = &World::isLeaderAlive;
+		doNewDecisions[5].trueBranch = &doNewActions[4];
+		doNewDecisions[5].falseBranch = &doNewActions[5];
+	}
+
+	DecisionPtr DecisionTrees::doNewDecisions[6];
+	ActionPtr DecisionTrees::doNewActions[6];
+
+*/
+
 }; // end of namespace

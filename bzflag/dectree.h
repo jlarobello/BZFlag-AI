@@ -126,6 +126,11 @@ namespace aicore
 		static ActionPtr doUpdateMotionActions[3];
 		static ActionPtr doUpdateShootingActions[3];
 		static ActionPtr doUpdateDropFlagActions[2];
+
+		////////////////////////////////////////////
+//		static DecisionPtr doNewDecisions[6];
+//		static ActionPtr doNewActions[6];
+
 	};
 
 }; // end of namespace
