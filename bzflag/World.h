@@ -139,6 +139,8 @@ class World {
 
     void		freeInsideNodes() const;
 
+    /* For AI management */
+
   private:
     // disallow copy and assignment
 			World(const World&);
@@ -191,12 +193,74 @@ class World {
     static BundleMgr	*bundleMgr;
     static std::string	locale;
     static int flagTexture;
-};
 
+    /* For AI management */
+    int robotTanks = 0;
+    PlayerId leader = NULL;
+    PlayerId attacker[3];
+    PlayerId defender[2];
+
+  public:
+    void addRobotAI(PlayerId robot);
+    void setLeader(PlayerId robot);
+    int getTanksNum();
+    PlayerId getLeader();
+    bool isAttacker(PlayerId robot);
+    bool isDefender(PlayerId robot);
+};
 
 //
 // World
 //
+
+inline bool World::isAttacker(PlayerId robot)
+{
+    for (int i = 0; i < 3; i++)
+        if (robot == attacker[i])
+            return true;
+    return false;
+}
+
+inline bool World::isDefender(PlayerId robot)
+{
+    for (int i = 0; i < 2; i++)
+        if (robot == defender[i])
+            return true;
+    return false;
+}
+
+inline PlayerId World::getLeader()
+{
+    return leader;
+}
+
+inline int World::getTanksNum()
+{
+    return robotTanks;
+}
+
+inline void World::addRobotAI(PlayerId robot)
+{
+    if (robotTanks == 0)
+    {
+        leader = robot;
+        attacker[robotTanks] = robot;
+    }
+    else if (robotTanks < 3)
+    {
+        attacker[robotTanks];
+    }
+    else
+    {
+        defender[(robotTanks - 3)];
+    }
+    robotTanks++;
+}
+
+inline void World::setLeader(PlayerId robot)
+{
+    leader = robot;
+}
 
 inline  bool		World::allowTeams() const
 {
