@@ -1,6 +1,6 @@
 # BZFlag Green Team AI
 <br>
-UPDATE: Changed the code to Professor Chin's A3 solution. We will develop of of this.
+Branch for decision making and AI management.
 <br> 
 <br>
 **Installation:**
