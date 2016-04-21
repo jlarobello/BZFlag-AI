@@ -33,9 +33,6 @@ AStarNode::AStarNode(const float location[3])
 			y += b;
 			if (AStarNode::isAccessible(x, y)) return;
 		}
-	char buffer[128];
-	sprintf (buffer, "***AStarNode: could not find any isAccessible node for (%f, %f, %f)***", location[0], location[1], location[2]);
-	controlPanel->addMessage(buffer);
 }
 AStarNode::AStarNode(int xi, int yi)
 {
@@ -91,8 +88,8 @@ void GraphFunctionContainer::getSuccessors(AStarNode& n, std::vector<AStarNode>*
 // returns the Euclidean distance of the AStarNode to the goalNode
 double GraphFunctionContainer::getHeuristics(AStarNode& n1, AStarNode& n2)
 {
-    InfluenceMap * imap = new InfluenceMap();
-    float influence = imap->getInfluence(n1.getScaledX(), n2.getScaledY());
+    InfluenceMap imap;
+    float influence = imap.getInfluence(n1.getScaledX(), n2.getScaledY());
 	// Euclidean distance as heuristics
 	return (hypotf(n2.getX() - n1.getX(), n2.getY() - n1.getY()) + influence);
 }
