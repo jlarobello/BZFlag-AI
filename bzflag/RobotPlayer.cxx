@@ -1138,6 +1138,17 @@ void		RobotPlayer::aStarSearch(const float startPos[3], const float goalPos[3],
 #endif
 }
 
+/*
+ * Function Name: smoothPath
+ * Description: smooth A* path
+ * Parameters: paths - the path generated from A*
+ * Return: void
+ */
+void RobotPlayer::smoothPath(std::vector< std::vector< AStarNode > >& paths)
+{
+
+}
+
 // Local Variables: ***
 // mode:C++ ***
 // tab-width: 8 ***

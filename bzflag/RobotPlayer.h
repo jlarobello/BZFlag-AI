@@ -92,6 +92,7 @@ class RobotPlayer : public LocalPlayer {
 	 Player*		RobotPlayer::lookupLocalPlayer(PlayerId id);
 	 void		RobotPlayer::aStarSearch(const float startPos[3], const float goalPos[3],
 										 std::vector< std::vector< AStarNode > >& paths);
+     void       RobotPlayer::smoothPath(std::vector< std::vector< AStarNode > >& paths);
 
 	 static const float		CohesionW;
 	 static const float		SeparationW;
