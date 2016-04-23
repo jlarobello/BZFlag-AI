@@ -36,6 +36,8 @@
 #include "BZDBCache.h" // needed for worldSize, tankRadius
 #include <time.h>  // needed for clock_t, clock, CLOCKS_PER_SECOND
 #include "dectree.h" // needed for decision trees
+#include <iostream>       // std::cout
+#include <thread>
 
 std::vector<BzfRegion*>* RobotPlayer::obstacleList = NULL;
 
@@ -253,7 +255,7 @@ void			RobotPlayer::evade(float dt)
 	    else
 	      rotation = rotation2;
 	    setDesiredSpeed(1.0f);
-	    setDesiredAngVel(rotation);
+		setDesiredAngVel(rotation);
 #ifdef TRACE3
 	char buffer[128];
 	sprintf (buffer, "R%d-%d evading", getTeam(), getId());
@@ -632,14 +634,17 @@ void			RobotPlayer::setTarget(const Player* _target)
   AStarNode goalNode(goalPos);
   if (!paths.empty() && goalNode == pathGoalNode)
 	  return; // same goal so no need to plan again
-  
+
   clock_t start_s = clock();
   aStarSearch(getPosition(), goalPos, paths);
+  //std::thread thr(&RobotPlayer::aStarSearch, this, getPosition(), goalPos, paths);
   clock_t stop_s = clock();
   float sum = (float)(stop_s - start_s) / CLOCKS_PER_SEC;
+#ifdef TRACE2
   char buffer[128];
   sprintf(buffer, "\nA* search took %f seconds", sum);
   controlPanel->addMessage(buffer);
+#endif
   if (!paths.empty()) {
 	  pathGoalNode.setX(paths[0][0].getX());
 	  pathGoalNode.setY(paths[0][0].getY());
@@ -1120,10 +1125,12 @@ void		RobotPlayer::aStarSearch(const float startPos[3], const float goalPos[3],
 	if (!paths.empty()) paths.clear();
 	paths = planner.getPlannedPaths();
 	if (paths.empty()) {
+#ifdef TRACE_PLANNER
 		char buffer[128];
 		sprintf (buffer, "***RobotPlayer::aStarSearch: R%d-%d could not find a path from (%f, %f) to (%f, %f)***",
 			getTeam(), getId(), startPos[0], startPos[1], goalPos[0], goalPos[1]);
 		controlPanel->addMessage(buffer);
+#endif
 	}
 #ifdef TRACE_PLANNER
 	  char buffer[128];
@@ -1146,9 +1153,28 @@ void		RobotPlayer::aStarSearch(const float startPos[3], const float goalPos[3],
  */
 void RobotPlayer::smoothPath(std::vector< std::vector< AStarNode > >& paths)
 {
+	std::vector < std::vector< AStarNode >> outputPath;
 
+	if (paths.size() == 2) {
+		outputPath = paths;
+	}
+	else {
+		outputPath.at(0) = paths.at(0);
+		int inputIndex = 2;
+
+		while (inputIndex < paths.size() - 1) {
+			if (!rayClear(outputPath.at(outputPath.size() - 1),  paths.at(inputIndex))) {
+				outputPath.push_back(paths.at(inputIndex - 1));
+			}
+			inputIndex++;
+		}
+	}
+	outputPath.push_back(paths.at(paths.size() - 1));
 }
 
+bool RobotPlayer::rayClear(std::vector< AStarNode > v1, std::vector< AStarNode > v2) {
+
+}
 // Local Variables: ***
 // mode:C++ ***
 // tab-width: 8 ***

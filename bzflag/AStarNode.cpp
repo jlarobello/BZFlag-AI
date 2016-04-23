@@ -32,9 +32,11 @@ AStarNode::AStarNode(const float location[3])
 			y += b;
 			if (AStarNode::isAccessible(x, y)) return;
 		}
+#ifdef TRACE2
 	char buffer[128];
 	sprintf (buffer, "***AStarNode: could not find any isAccessible node for (%f, %f, %f)***", location[0], location[1], location[2]);
 	controlPanel->addMessage(buffer);
+#endif
 }
 AStarNode::AStarNode(int xi, int yi)
 {
