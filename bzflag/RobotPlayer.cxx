@@ -1173,7 +1173,7 @@ void RobotPlayer::smoothPath(std::vector< std::vector< AStarNode > >& paths)
 }
 
 bool RobotPlayer::rayClear(std::vector< AStarNode > v1, std::vector< AStarNode > v2) {
-
+	return true;
 }
 // Local Variables: ***
 // mode:C++ ***
