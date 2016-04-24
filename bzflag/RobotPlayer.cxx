@@ -637,9 +637,6 @@ void			RobotPlayer::setTarget(const Player* _target)
   aStarSearch(getPosition(), goalPos, paths);
   clock_t stop_s = clock();
   float sum = (float)(stop_s - start_s) / CLOCKS_PER_SEC;
-  char buffer[128];
-  sprintf(buffer, "\nA* search took %f seconds", sum);
-  controlPanel->addMessage(buffer);
   if (!paths.empty()) {
 	  pathGoalNode.setX(paths[0][0].getX());
 	  pathGoalNode.setY(paths[0][0].getY());
