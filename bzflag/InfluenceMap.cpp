@@ -23,11 +23,11 @@ float InfluenceMap::getInfluence(float x, float y)
         {
             pos = p->getPosition();
             distance   = getDistance(pos, nodePos);
-            influence += ((INFL / distance) + 1);
+            influence += (distance <= 250) ? ((INFL / distance) + 1) : 0;
         }
     }
 
-    return 0;
+    return influence;
 }
 
 float InfluenceMap::getDistance(const float pos1[3], const float pos2[3])
