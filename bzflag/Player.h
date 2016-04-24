@@ -156,6 +156,10 @@ public:
 
   bool		validTeamTarget(const Player *possibleTarget) const;
 
+
+  bool		isAttackers() const;
+  void		setAttacker(bool = true);
+
   // returns true iff dead reckoning is too different from the
   // current tank state.
   bool		isDeadReckoningWrong() const;
@@ -196,6 +200,7 @@ public:
 
   void setZpos (float z);
 
+
   float getMaxSpeed ( void ) const;
 
   void forceReload(float time);
@@ -206,6 +211,7 @@ public:
   int reportedHits;
   int computedHits;
   std::map<int,bool>	hitMap;
+
 protected:
   void	  clearRemoteSounds();
   void	  addRemoteSound(int sound);
@@ -253,6 +259,8 @@ private:
   bool			playerList;
   Address		ipAddr;
   bool			haveIpAddr;
+
+  bool			attacker;
 
   // data use for drawing
   TankSceneNode*	tankNode;
@@ -626,6 +634,16 @@ inline void*		Player::pack(void* buf, uint16_t& code)
 inline void Player::setZpos (float z)
 {
   state.pos[2] = z;
+}
+
+inline bool		Player::isAttackers() const
+{
+	return attacker;
+}
+
+inline void		Player::setAttacker(bool _attacker)
+{
+	attacker = _attacker;
 }
 
 #endif /* __PLAYER_H__ */

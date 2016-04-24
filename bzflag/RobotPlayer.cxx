@@ -403,7 +403,10 @@ void		RobotPlayer::setNewLeader(float dt)
 /* is the current robot an attacker */
 bool		RobotPlayer::isAttacker(float dt)
 {
-	return true;
+	char buffer[128];
+	sprintf(buffer, "isAttackers");
+	controlPanel->addMessage(buffer);
+	return isAttackers();
 }
 
 /* is the current robot a leader */

@@ -184,6 +184,7 @@ static bool leftMouseButton   = false;
 static bool rightMouseButton  = false;
 static bool middleMouseButton = false;
 
+
 static const char*	blowedUpMessage[] = {
   NULL,
   "Got shot by ",
@@ -4515,6 +4516,10 @@ static void		addRobots()
       robotServer[j]->sendEnter(ComputerPlayer, robots[j]->getTeam(),
 				robots[j]->getCallSign(),
 				robots[j]->getMotto(), "");
+
+		  if (j < 3) {
+			  robots[j]->setAttacker(true);
+		  }
     }
     j++;
   }
