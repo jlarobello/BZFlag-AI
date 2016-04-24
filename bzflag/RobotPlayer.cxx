@@ -1187,7 +1187,7 @@ void RobotPlayer::smoothPath(std::vector< std::vector< AStarNode > >& paths)
 		outputPath = paths[0];
 	}
 	else {
-		outputPath.at(0) = paths[0].at(0);
+		outputPath.push_back(paths[0].at(0));
 		int inputIndex = 2;
 
 		while (inputIndex < paths[0].size() - 1) {
@@ -1218,4 +1218,3 @@ bool RobotPlayer::rayClear(AStarNode v1, AStarNode v2) {
 // indent-tabs-mode: t ***
 // End: ***
 // ex: shiftwidth=2 tabstop=8
-
