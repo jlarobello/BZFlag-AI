@@ -144,10 +144,10 @@ namespace aicore
 		// actions
 		doAttackDefendActions[0].actFuncPtr = &RobotPlayer::doNothing;
 		doAttackDefendActions[1].actFuncPtr = &RobotPlayer::evade;
-		//doAttackDefendActions[2].actFuncPtr = &RobotPlayer::defend;
+		doAttackDefendActions[2].actFuncPtr = &RobotPlayer::defend;
 		doAttackDefendActions[3].actFuncPtr = &RobotPlayer::followPath;
-		//doAttackDefendActions[4].actFuncPtr = &RobotPlayer::followLeader;
-		//doAttackDefendActions[5].actFuncPtr = &RobotPlayer::setNewLeader;
+		doAttackDefendActions[4].actFuncPtr = &RobotPlayer::followLeader;
+		doAttackDefendActions[5].actFuncPtr = &RobotPlayer::setNewLeader;
 
 		// decision tree
 		doAttackDefendDecisions[0].decFuncPtr = &RobotPlayer::amAlive;
