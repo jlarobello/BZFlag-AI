@@ -381,6 +381,24 @@ void			RobotPlayer::followPath(float dt)
 #endif
     }
   }
+  
+/* defend the enemies */
+void		RobotPlayer::defend(float dt)
+{
+	
+}
+
+/* follow the team leader */
+void		RobotPlayer::followLeader(float dt)
+{
+
+}
+
+/* set a new team leader if the cureent leader is dead */
+void		RobotPlayer::setNewLeader(float dt)
+{
+
+}
 
 /* is the current robot an attacker */
 bool		RobotPlayer::isAttacker(float dt)
