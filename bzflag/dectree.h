@@ -128,8 +128,8 @@ namespace aicore
 		static ActionPtr doUpdateDropFlagActions[2];
 
 		////////////////////////////////////////////
-//		static DecisionPtr doNewDecisions[6];
-//		static ActionPtr doNewActions[6];
+		static DecisionPtr doAttackDefendDecisions[6];
+		static ActionPtr doAttackDefendActions[6];
 
 	};
 

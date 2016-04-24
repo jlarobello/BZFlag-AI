@@ -138,6 +138,41 @@ namespace aicore
 
 		doUpdateDropFlagActions[0].actFuncPtr = &RobotPlayer::doNothing;
 		doUpdateDropFlagActions[1].actFuncPtr = &RobotPlayer::dropFlag;
+	
+		//////////////////////////////////////////////////
+
+		// actions
+		doAttackDefendActions[0].actFuncPtr = &RobotPlayer::doNothing;
+		doAttackDefendActions[1].actFuncPtr = &RobotPlayer::evade;
+		//doAttackDefendActions[2].actFuncPtr = &RobotPlayer::defend;
+		doAttackDefendActions[3].actFuncPtr = &RobotPlayer::followPath;
+		//doAttackDefendActions[4].actFuncPtr = &RobotPlayer::followLeader;
+		//doAttackDefendActions[5].actFuncPtr = &RobotPlayer::setNewLeader;
+
+		// decision tree
+		doAttackDefendDecisions[0].decFuncPtr = &RobotPlayer::amAlive;
+		doAttackDefendDecisions[0].trueBranch = &doAttackDefendDecisions[1];
+		doAttackDefendDecisions[0].falseBranch = &doAttackDefendActions[0];
+
+		doAttackDefendDecisions[1].decFuncPtr = &RobotPlayer::shotComing;
+		doAttackDefendDecisions[1].trueBranch = &doAttackDefendActions[1];
+		doAttackDefendDecisions[1].falseBranch = &doAttackDefendDecisions[2];
+
+		doAttackDefendDecisions[2].decFuncPtr = &RobotPlayer::isAttacker;
+		doAttackDefendDecisions[2].trueBranch = &doAttackDefendDecisions[3];
+		doAttackDefendDecisions[2].falseBranch = &doAttackDefendActions[2];
+
+		doAttackDefendDecisions[3].decFuncPtr = &RobotPlayer::isLeader;
+		doAttackDefendDecisions[3].trueBranch = &doAttackDefendDecisions[4];
+		doAttackDefendDecisions[3].falseBranch = &doAttackDefendDecisions[5];
+
+		doAttackDefendDecisions[4].decFuncPtr = &RobotPlayer::haveFlag;
+		doAttackDefendDecisions[4].trueBranch = &doAttackDefendActions[3];
+		doAttackDefendDecisions[4].falseBranch = &doAttackDefendActions[3];
+
+		doAttackDefendDecisions[5].decFuncPtr = &RobotPlayer::isLeaderAlive;
+		doAttackDefendDecisions[5].trueBranch = &doAttackDefendActions[4];
+		doAttackDefendDecisions[5].falseBranch = &doAttackDefendActions[5];
 	}
 
 	DecisionPtr DecisionTrees::doUpdateMotionDecisions[2];
@@ -147,46 +182,8 @@ namespace aicore
 	DecisionPtr DecisionTrees::doUpdateDropFlagDecisions[5];
 	ActionPtr DecisionTrees::doUpdateDropFlagActions[2];
 
-///////////////////////////////////////////////////////////////////////////
-/*
-	{
-		// actions
-		doNewActions[0].actFuncPtr = &RobotPlayer::doNothing;
-		doNewActions[1].actFuncPtr = &RobotPlayer::evade;
-		doNewActions[2].actFuncPtr = &World::defend;
-		doNewActions[3].actFuncPtr = &RobotPlayer::followPath;
-		doNewActions[4].actFuncPtr = &World::followLeader;
-		doNewActions[5].actFuncPtr = &World::setNewLeader;
-
-		// decision tree
-		doNewDecisions[0].decFuncPtr = &RobotPlayer::amAlive;
-		doNewDecisions[0].trueBranch = &doNewDecisions[1];
-		doNewDecisions[0].falseBranch = &doNewActions[0];
-
-		doNewDecisions[1].decFuncPtr = &RobotPlayer::shotComing;
-		doNewDecisions[1].trueBranch = &doNewActions[1];
-		doNewDecisions[1].falseBranch = &doNewDecisions[2];
-
-		doNewDecisions[2].decFuncPtr = &World::isAttacker;
-		doNewDecisions[2].trueBranch = &doNewDecisions[3];
-		doNewDecisions[2].falseBranch = &doNewActions[2];
-
-		doNewDecisions[3].decFuncPtr = &World::isLeader;
-		doNewDecisions[3].trueBranch = &doNewDecisions[4];
-		doNewDecisions[3].falseBranch = &doNewDecisions[5];
-
-		doNewDecisions[4].decFuncPtr = &World::haveFlag;
-		doNewDecisions[4].trueBranch = &doNewActions[3];
-		doNewDecisions[4].falseBranch = &doNewActions[3];
-
-		doNewDecisions[5].decFuncPtr = &World::isLeaderAlive;
-		doNewDecisions[5].trueBranch = &doNewActions[4];
-		doNewDecisions[5].falseBranch = &doNewActions[5];
-	}
-
-	DecisionPtr DecisionTrees::doNewDecisions[6];
-	ActionPtr DecisionTrees::doNewActions[6];
-
-*/
-
+	//////////////////////////////////////////////////
+	DecisionPtr DecisionTrees::doAttackDefendDecisions[6];
+	ActionPtr DecisionTrees::doAttackDefendActions[6];
+	
 }; // end of namespace

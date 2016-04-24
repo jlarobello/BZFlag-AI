@@ -53,6 +53,10 @@ class RobotPlayer : public LocalPlayer {
 	void		RobotPlayer::evade(float dt);
 	void		RobotPlayer::followPath(float dt);
 
+	bool		RobotPlayer::isAttacker(float dt);
+	bool		RobotPlayer::isLeader(float dt);
+	bool		RobotPlayer::haveFlag(float dt);
+	bool		RobotPlayer::isLeaderAlive(float dt);
 	bool		RobotPlayer::isFiringStatusReady(float dt);
 	bool		RobotPlayer::hasShotTimerElapsed(float dt);
 	bool		RobotPlayer::isShotCloseToTarget(float dt);
@@ -93,7 +97,7 @@ class RobotPlayer : public LocalPlayer {
 	 void		RobotPlayer::aStarSearch(const float startPos[3], const float goalPos[3],
 										 std::vector< std::vector< AStarNode > >& paths);
      void       RobotPlayer::smoothPath(std::vector< std::vector< AStarNode > >& paths);
-	 bool		RobotPlayer::rayClear(std::vector< AStarNode >, std::vector< AStarNode >);
+	 bool		RobotPlayer::rayClear(AStarNode, AStarNode);
 
 	 static const float		CohesionW;
 	 static const float		SeparationW;

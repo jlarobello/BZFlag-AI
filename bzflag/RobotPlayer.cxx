@@ -382,6 +382,33 @@ void			RobotPlayer::followPath(float dt)
     }
   }
 
+/* is the current robot an attacker */
+bool		RobotPlayer::isAttacker(float dt)
+{
+	return true;
+}
+
+/* is the current robot a leader */
+bool		RobotPlayer::isLeader(float dt)
+{
+
+	return true;
+}
+
+/* is the current robot have the enemy flag */
+bool		RobotPlayer::haveFlag(float dt)
+{
+
+	return true;
+}
+
+/* is the leader of the current robot have the enemy flag */
+bool		RobotPlayer::isLeaderAlive(float dt)
+{
+
+	return true;
+}
+
 /*
  * is firingStatus == Ready?
  */
@@ -1153,26 +1180,26 @@ void		RobotPlayer::aStarSearch(const float startPos[3], const float goalPos[3],
  */
 void RobotPlayer::smoothPath(std::vector< std::vector< AStarNode > >& paths)
 {
-	std::vector < std::vector< AStarNode >> outputPath;
+	std::vector< AStarNode > outputPath;
 
-	if (paths.size() == 2) {
-		outputPath = paths;
+	if (paths[0].size() == 2) {
+		outputPath = paths[0];
 	}
 	else {
-		outputPath.at(0) = paths.at(0);
+		outputPath.at(0) = paths[0].at(0);
 		int inputIndex = 2;
 
-		while (inputIndex < paths.size() - 1) {
-			if (!rayClear(outputPath.at(outputPath.size() - 1),  paths.at(inputIndex))) {
-				outputPath.push_back(paths.at(inputIndex - 1));
+		while (inputIndex < paths[0].size() - 1) {
+			if (!rayClear(outputPath.at(outputPath.size() - 1),  paths[0].at(inputIndex))) {
+				outputPath.push_back(paths[0].at(inputIndex - 1));
 			}
 			inputIndex++;
 		}
 	}
-	outputPath.push_back(paths.at(paths.size() - 1));
+	outputPath.push_back(paths[0].at(paths[0].size() - 1));
 }
 
-bool RobotPlayer::rayClear(std::vector< AStarNode > v1, std::vector< AStarNode > v2) {
+bool RobotPlayer::rayClear(AStarNode v1, AStarNode v2) {
 	return true;
 }
 // Local Variables: ***
