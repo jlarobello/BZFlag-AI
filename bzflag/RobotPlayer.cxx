@@ -664,6 +664,7 @@ void			RobotPlayer::setTarget(const Player* _target)
 
   clock_t start_s = clock();
   aStarSearch(getPosition(), goalPos, paths);
+  smoothPath(paths);
   //std::thread thr(&RobotPlayer::aStarSearch, this, getPosition(), goalPos, paths);
   clock_t stop_s = clock();
   float sum = (float)(stop_s - start_s) / CLOCKS_PER_SEC;
@@ -1200,8 +1201,16 @@ void RobotPlayer::smoothPath(std::vector< std::vector< AStarNode > >& paths)
 }
 
 bool RobotPlayer::rayClear(AStarNode v1, AStarNode v2) {
-	return true;
+
+    const float origin[3] = { v1.getScaledX(), v1.getScaledY(), 0 };
+    const float dest[3] = { v2.getScaledX(), v2.getScaledY(), 0 };
+    const Ray ray = Ray(origin, dest);
+    float min = 0, t = 0;
+    const Obstacle*  obstacle = ShotStrategy::getFirstBuilding( ray, min, t);
+    
+    return obstacle->collisionState;
 }
+
 // Local Variables: ***
 // mode:C++ ***
 // tab-width: 8 ***
