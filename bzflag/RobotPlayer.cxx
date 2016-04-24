@@ -1226,7 +1226,7 @@ bool RobotPlayer::rayClear(AStarNode v1, AStarNode v2) {
     float min = 0, t = 0;
     const Obstacle*  obstacle = ShotStrategy::getFirstBuilding( ray, min, t);
     
-    return obstacle->collisionState;
+	return true;// obstacle->collisionState;
 }
 
 // Local Variables: ***
