@@ -404,7 +404,7 @@ void		RobotPlayer::setNewLeader(float dt)
 bool		RobotPlayer::isAttacker(float dt)
 {
 	char buffer[128];
-	sprintf(buffer, "isAttackers");
+	sprintf(buffer, "isAttackers %s", isAttackers() ? "true" : "false");
 	controlPanel->addMessage(buffer);
 	return isAttackers();
 }
@@ -602,6 +602,8 @@ void				RobotPlayer::doUpdateMotion(float dt)
 {
 	// Find the update motion decision
 	aicore::DecisionPtr::runDecisionTree(aicore::DecisionTrees::doUpdateMotionDecisions, this, dt);
+	// Find the attack defend decision
+	aicore::DecisionPtr::runDecisionTree(aicore::DecisionTrees::doAttackDefendDecisions, this, dt);
 	LocalPlayer::doUpdateMotion(dt);
 }
 

@@ -157,11 +157,11 @@ namespace aicore
 		doAttackDefendDecisions[1].decFuncPtr = &RobotPlayer::shotComing;
 		doAttackDefendDecisions[1].trueBranch = &doAttackDefendActions[1];
 		doAttackDefendDecisions[1].falseBranch = &doAttackDefendDecisions[2];
-
+		
 		doAttackDefendDecisions[2].decFuncPtr = &RobotPlayer::isAttacker;
 		doAttackDefendDecisions[2].trueBranch = &doAttackDefendDecisions[3];
 		doAttackDefendDecisions[2].falseBranch = &doAttackDefendActions[2];
-
+		
 		doAttackDefendDecisions[3].decFuncPtr = &RobotPlayer::isLeader;
 		doAttackDefendDecisions[3].trueBranch = &doAttackDefendDecisions[4];
 		doAttackDefendDecisions[3].falseBranch = &doAttackDefendDecisions[5];
