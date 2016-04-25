@@ -422,8 +422,16 @@ bool		RobotPlayer::isLeader(float dt)
 /* is the current robot have the enemy flag */
 bool		RobotPlayer::haveFlag(float dt)
 {
+	bool enemyFlag = false;
 
-	return true;
+	if ((getFlag()->flagTeam != TeamColor::NoTeam) && (getFlag() != Flags::GreenTeam)) {
+		enemyFlag = true;
+	}
+	else {
+		enemyFlag = false;
+	}
+
+	return enemyFlag;
 }
 
 /* is the leader of the current robot have the enemy flag */
