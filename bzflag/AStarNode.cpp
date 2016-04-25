@@ -91,6 +91,7 @@ double GraphFunctionContainer::getHeuristics(AStarNode& n1, AStarNode& n2)
     InfluenceMap * imap = new InfluenceMap();
     float influence = imap->getInfluence(n1.getScaledX(), n2.getScaledY());
 	// Euclidean distance as heuristics plus influence
+    delete imap;
 	return (hypotf(n2.getX() - n1.getX(), n2.getY() - n1.getY()) + influence);
 }
 
