@@ -404,7 +404,7 @@ void		RobotPlayer::setNewLeader(float dt)
 bool		RobotPlayer::isAttacker(float dt)
 {
 	char buffer[128];
-	sprintf(buffer, "isAttackers %s", isAttackers() ? "true" : "false");
+	sprintf(buffer, "%d isAttackers %s", getId(), isAttackers() ? "true" : "false");
 	controlPanel->addMessage(buffer);
 	return isAttackers();
 }
@@ -412,8 +412,11 @@ bool		RobotPlayer::isAttacker(float dt)
 /* is the current robot a leader */
 bool		RobotPlayer::isLeader(float dt)
 {
+	char buffer[128];
+	sprintf(buffer, "%d amLeader %s", getId(), amLeader() ? "true" : "false");
+	controlPanel->addMessage(buffer);
 
-	return true;
+	return amLeader();
 }
 
 /* is the current robot have the enemy flag */

@@ -159,6 +159,8 @@ public:
 
   bool		isAttackers() const;
   void		setAttacker(bool = true);
+  bool		amLeader() const;
+  void		setLeader(bool = true);
 
   // returns true iff dead reckoning is too different from the
   // current tank state.
@@ -261,6 +263,7 @@ private:
   bool			haveIpAddr;
 
   bool			attacker;
+  bool			leader;
 
   // data use for drawing
   TankSceneNode*	tankNode;
@@ -644,6 +647,16 @@ inline bool		Player::isAttackers() const
 inline void		Player::setAttacker(bool _attacker)
 {
 	attacker = _attacker;
+}
+
+inline bool		Player::amLeader() const
+{
+	return leader;
+}
+
+inline void		Player::setLeader(bool _leader)
+{
+	leader = _leader;
 }
 
 #endif /* __PLAYER_H__ */
