@@ -23,7 +23,7 @@ float InfluenceMap::getInfluence(float x, float y)
         {
             pos = p->getPosition();
             distance   = getDistance(pos, nodePos);
-            influence += (distance <= 300) ? ((INFL / distance) + 1) : 0;
+            influence += (distance <= 400) ? ((INFL / distance) + 1) : 0;
         }
     }
 

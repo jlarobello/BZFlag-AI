@@ -90,7 +90,7 @@ double GraphFunctionContainer::getHeuristics(AStarNode& n1, AStarNode& n2)
 {
     InfluenceMap * imap = new InfluenceMap();
     float influence = imap->getInfluence(n1.getScaledX(), n2.getScaledY());
-	// Euclidean distance as heuristics
+	// Euclidean distance as heuristics plus influence
 	return (hypotf(n2.getX() - n1.getX(), n2.getY() - n1.getY()) + influence);
 }
 
@@ -107,6 +107,4 @@ GraphFunctionContainer::GraphFunctionContainer (float worldSize)
     ConstCostVector.push_back(SQRT2); ConstCostVector.push_back(1.0);
     ConstCostVector.push_back(1.0); ConstCostVector.push_back(SQRT2);
     ConstCostVector.push_back(1.0); ConstCostVector.push_back(SQRT2);
-
-
 }

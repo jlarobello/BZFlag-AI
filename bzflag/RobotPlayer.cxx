@@ -630,7 +630,7 @@ void			RobotPlayer::setTarget(const Player* _target)
 	  findOpponentFlag(goalPos);
 
   AStarNode goalNode(goalPos);
-  if (!paths.empty() && goalNode == pathGoalNode)
+  if (paths.empty() && goalNode == pathGoalNode)
 	  return; // same goal so no need to plan again
   
   clock_t start_s = clock();
