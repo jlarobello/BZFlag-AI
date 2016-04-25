@@ -4503,6 +4503,8 @@ static void		addRobots()
     return;
   }
 
+  int green = 0;
+
   for (i = 0, j = 0; i < numRobotTanks; i++) {
     robotServer[j] = new ServerLink(serverNetworkAddress, startupInfo.serverPort);
     if (!robotServer[j] || robotServer[j]->getState() != ServerLink::Okay) {
@@ -4517,8 +4519,9 @@ static void		addRobots()
 				robots[j]->getCallSign(),
 				robots[j]->getMotto(), "");
 
-		  if (j < 3) {
+		  if (green < 3 && (robots[j]->getTeam() == TeamColor::GreenTeam)) {
 			  robots[j]->setAttacker(true);
+			  green++;
 		  }
     }
     j++;
