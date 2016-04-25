@@ -9,8 +9,7 @@
 #ifndef INFLUENCE_MAP_H
 #define INFLUENCE_MAP_H
 
-#define INFL -5
-#define C -1
+#define INFL 10
 
 class InfluenceMap
 {

@@ -107,6 +107,4 @@ GraphFunctionContainer::GraphFunctionContainer (float worldSize)
     ConstCostVector.push_back(SQRT2); ConstCostVector.push_back(1.0);
     ConstCostVector.push_back(1.0); ConstCostVector.push_back(SQRT2);
     ConstCostVector.push_back(1.0); ConstCostVector.push_back(SQRT2);
-
-
 }

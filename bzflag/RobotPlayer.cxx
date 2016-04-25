@@ -630,7 +630,7 @@ void			RobotPlayer::setTarget(const Player* _target)
 	  findOpponentFlag(goalPos);
 
   AStarNode goalNode(goalPos);
-  if (!paths.empty() && goalNode == pathGoalNode)
+  if (paths.empty() && goalNode == pathGoalNode)
 	  return; // same goal so no need to plan again
   
   clock_t start_s = clock();
@@ -651,45 +651,6 @@ void			RobotPlayer::setTarget(const Player* _target)
   }
   controlPanel->addMessage(" ]\n\n");
 #endif
-
-  /*
-  const float *p1 = proj;
-  const float* p2 = getPosition();
-  float q1[2], q2[2];
-  BzfRegion* headRegion = findRegion(p1, q1);
-  BzfRegion* tailRegion = findRegion(p2, q2);
-  if (!headRegion || !tailRegion) {
-    // if can't reach target then forget it
-#ifdef TRACE2
-	  char buffer[128];
-	  sprintf (buffer, "setTarget cannot find path between Regions head=%d and tail=%d",
-		  (int)headRegion, (int)tailRegion);
-	  controlPanel->addMessage(buffer);
-#endif
-    return;
-  }
-
-  mailbox++;
-  headRegion->setPathStuff(0.0f, NULL, q1, mailbox);
-  RegionPriorityQueue queue;
-  queue.insert(headRegion, 0.0f);
-  BzfRegion* next;
-  while (!queue.isEmpty() && (next = queue.remove()) != tailRegion)
-    findPath(queue, next, tailRegion, q2, mailbox);
-
-  // get list of points to go through to reach the target
-  next = tailRegion;
-  do {
-    p1 = next->getA();
-    path.push_back(p1);
-    next = next->getTarget();
-  } while (next && next != headRegion);
-  if (next || tailRegion == headRegion)
-    path.push_back(q1);
-  else
-    path.clear();
-  pathIndex = 0;
-	*/
 }
 
 BzfRegion*		RobotPlayer::findRegion(const float p[2],
