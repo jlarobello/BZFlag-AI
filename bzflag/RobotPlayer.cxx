@@ -402,7 +402,17 @@ void		RobotPlayer::followLeader(float dt)
 /* set a new team leader if the cureent leader is dead */
 void		RobotPlayer::setNewLeader(float dt)
 {
-
+	for (int i = 1; i <= World::getWorld()->getCurMaxPlayers(); i++)
+	{
+		Player *p = 0;
+		if (i < World::getWorld()->getCurMaxPlayers()) {
+			p = World::getWorld()->getPlayer(i);
+			if (p->getTeam() == TeamColor::GreenTeam && p->isAttackers() == true) {
+				p->setLeader();
+				break;
+			}
+		}
+	}
 }
 
 /* is the current robot in green team */
@@ -1252,13 +1262,15 @@ void RobotPlayer::smoothPath(std::vector< std::vector< AStarNode > >& paths)
 
 bool RobotPlayer::rayClear(AStarNode v1, AStarNode v2) {
 
-    const float origin[3] = { v1.getScaledX(), v1.getScaledY(), 0 };
-    const float dest[3] = { v2.getScaledX(), v2.getScaledY(), 0 };
+    const float origin[3] = { v1.getScaledX(), v1.getScaledY(), BZDBCache::tankHeight / 2 };
+    const float dest[3] = { v2.getScaledX(), v2.getScaledY(), BZDBCache::tankHeight / 2 };
     const Ray ray = Ray(origin, dest);
-    float min = 0, t = 0;
-    const Obstacle*  obstacle = ShotStrategy::getFirstBuilding( ray, min, t);
-    
-	return true;// obstacle->collisionState;
+	float t[2] = { 0,0 };
+	t[0] = dest[0] - origin[0];
+	t[1] = dest[1] - origin[1];
+	float dist = hypotf(t[0], t[1]);
+
+    return ShotStrategy::getFirstBuilding(ray, 0, dist);
 }
 
 // Local Variables: ***
