@@ -1255,27 +1255,27 @@ void		RobotPlayer::aStarSearch(const float startPos[3], const float goalPos[3],
 void RobotPlayer::smoothPath(std::vector< std::vector< AStarNode > >& paths)
 {
 	std::vector< AStarNode > outputPath;
-    char buffer[200];
-    sprintf(buffer, "SMooth Path");
-    controlPanel->addMessage(buffer);
+
 	if (paths[0].size() == 2) {
 		outputPath = paths[0];
-	}
-	else {
+	} 
+    else {
 		outputPath.push_back(paths[0].at(0));
-		int inputIndex = 2;
+		int inputIndex = 1;
 
 		while (inputIndex < paths[0].size() - 1) {
 			if (!rayClear(outputPath.at(outputPath.size() - 1),  paths[0].at(inputIndex))) {
 				outputPath.push_back(paths[0].at(inputIndex - 1));
-                char buffer[200];
-                sprintf(buffer, "RAY");
-                controlPanel->addMessage(buffer);
 			}
 			inputIndex++;
 		}
 	}
 	outputPath.push_back(paths[0].at(paths[0].size() - 1));
+
+    for (int i = 0; i < outputPath.size(); i++)
+    {
+
+    }
 }
 
 bool RobotPlayer::rayClear(AStarNode v1, AStarNode v2) {
