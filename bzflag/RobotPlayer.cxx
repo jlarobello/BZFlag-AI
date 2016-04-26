@@ -41,10 +41,15 @@
 
 std::vector<BzfRegion*>* RobotPlayer::obstacleList = NULL;
 
-const float RobotPlayer::CohesionW = 1.0f;
+/*const float RobotPlayer::CohesionW = 1.0f;
 const float RobotPlayer::SeparationW = 1000.0f;
 const float RobotPlayer::AlignW = 1.0f;
-const float RobotPlayer::PathW = 10.0f;
+const float RobotPlayer::PathW = 10.0f;*/
+
+const float RobotPlayer::CohesionW = 0;
+const float RobotPlayer::SeparationW = 0;
+const float RobotPlayer::AlignW = 0;
+const float RobotPlayer::PathW = 1;
 
 RobotPlayer::RobotPlayer(const PlayerId& _id, const char* _name,
 				ServerLink* _server,
