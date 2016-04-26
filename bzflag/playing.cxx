@@ -4520,19 +4520,18 @@ static void		addRobots()
 		  robots[j]->getMotto(), "");
 
 		if (green < 3 && (robots[j]->getTeam() == TeamColor::GreenTeam)) {
-			  if (green == 0 && robotServer[j]->getId() == 1) {
+			  if (green == 0) {
 				  robots[j]->setLeader(true);
 			  }
 			  else {
 				  robots[j]->setLeader(false);
 			  }
-			  if (j < 3) {
-				  robots[j]->setAttacker(true);
-				  green++;
-			  }
-			  else {
-				  robots[j]->setAttacker(false);
-			  }
+			  robots[j]->setAttacker(true);
+			  green++;
+		}
+
+		else if(green >= 3 && (robots[j]->getTeam() == TeamColor::GreenTeam)){
+			robots[j]->setAttacker(false);
 		}
     }
     j++;
