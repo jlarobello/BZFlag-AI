@@ -158,9 +158,9 @@ public:
 
 
   bool		isAttackers() const;
-  void		setAttacker(bool = true);
+  void		setAttacker(bool);
   bool		amLeader() const;
-  void		setLeader(bool = true);
+  void		setLeader(bool);
 
   // returns true iff dead reckoning is too different from the
   // current tank state.

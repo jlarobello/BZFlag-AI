@@ -402,13 +402,26 @@ void		RobotPlayer::followLeader(float dt)
 /* set a new team leader if the cureent leader is dead */
 void		RobotPlayer::setNewLeader(float dt)
 {
+	Player *p1 = 0;
+
 	for (int i = 1; i <= World::getWorld()->getCurMaxPlayers(); i++)
 	{
-		Player *p = 0;
 		if (i < World::getWorld()->getCurMaxPlayers()) {
-			p = World::getWorld()->getPlayer(i);
-			if (p->getTeam() == TeamColor::GreenTeam && p->isAttackers() == true) {
-				p->setLeader();
+			p1 = World::getWorld()->getPlayer(i);
+			if (p1->getTeam() == TeamColor::GreenTeam && p1->amLeader() == true) {
+				p1->setLeader(false);
+				break;
+			}
+		}
+	}
+
+	for (int i = 1; i <= World::getWorld()->getCurMaxPlayers(); i++)
+	{
+		Player *p2 = 0;
+		if (i < World::getWorld()->getCurMaxPlayers()) {
+			p2 = World::getWorld()->getPlayer(i);
+			if (p2->getTeam() == TeamColor::GreenTeam && p2->isAttackers() == true && p2 != p1) {
+				p2->setLeader(true);
 				break;
 			}
 		}
