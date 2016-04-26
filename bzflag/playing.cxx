@@ -4494,6 +4494,7 @@ static void		addRobots()
   char msg[MaxPacketLen];
   char callsign[CallSignLen];
   int i, j;
+  int green = 0;
 
   // add solo robots only when the server allows them
   if (BZDB.isTrue(StateDatabase::BZDB_DISABLEBOTS)) {
@@ -4503,8 +4504,6 @@ static void		addRobots()
     return;
   }
 
-  int green = 0;
-
   for (i = 0, j = 0; i < numRobotTanks; i++) {
     robotServer[j] = new ServerLink(serverNetworkAddress, startupInfo.serverPort);
     if (!robotServer[j] || robotServer[j]->getState() != ServerLink::Okay) {
@@ -4512,20 +4511,29 @@ static void		addRobots()
       continue;
     } else {
       snprintf(callsign, CallSignLen, "%s%2.2d", myTank->getCallSign(), j);
-      robots[j] = new RobotPlayer(robotServer[j]->getId(), callsign,
+	  robots[j] = new RobotPlayer(robotServer[j]->getId(), callsign,
 				  robotServer[j], myTank->getMotto());
-      robots[j]->setTeam(TeamColor::GreenTeam);
-      robotServer[j]->sendEnter(ComputerPlayer, robots[j]->getTeam(),
-				robots[j]->getCallSign(),
-				robots[j]->getMotto(), "");
+	  robots[j]->setTeam(TeamColor::GreenTeam);
 
-		  if (green < 3 && (robots[j]->getTeam() == TeamColor::GreenTeam)) {
-			  if (green == 0) {
+	  robotServer[j]->sendEnter(ComputerPlayer, robots[j]->getTeam(),
+		  robots[j]->getCallSign(),
+		  robots[j]->getMotto(), "");
+
+		if (green < 3 && (robots[j]->getTeam() == TeamColor::GreenTeam)) {
+			  if (green == 0 && robotServer[j]->getId() == 1) {
 				  robots[j]->setLeader(true);
 			  }
-			  robots[j]->setAttacker(true);
-			  green++;
-		  }
+			  else {
+				  robots[j]->setLeader(false);
+			  }
+			  if (j < 3) {
+				  robots[j]->setAttacker(true);
+				  green++;
+			  }
+			  else {
+				  robots[j]->setAttacker(false);
+			  }
+		}
     }
     j++;
   }

@@ -412,16 +412,19 @@ bool		RobotPlayer::isAttacker(float dt)
 	char buffer[128];
 	sprintf(buffer, "%s isAttackers %s", getCallSign(), isAttackers() ? "true" : "false");
 	controlPanel->addMessage(buffer);
+
+	sprintf(buffer, "%s amLeader %s", getCallSign(), amLeader() ? "true" : "false");
+	controlPanel->addMessage(buffer);
+
+	sprintf(buffer, "%s on GreenTeam? %s", getCallSign(), TeamColor::GreenTeam ? "true" : "false");
+	controlPanel->addMessage(buffer);
+
 	return isAttackers();
 }
 
 /* is the current robot a leader */
 bool		RobotPlayer::isLeader(float dt)
 {
-	char buffer[128];
-	sprintf(buffer, "%s amLeader %s", getCallSign(), amLeader() ? "true" : "false");
-	controlPanel->addMessage(buffer);
-
 	return amLeader();
 }
 
@@ -436,7 +439,7 @@ bool		RobotPlayer::isLeaderAlive(float dt)
 {
 	bool alive = false;
 
-	for (int i = 0; i <= World::getWorld()->getCurMaxPlayers(); i++)
+	for (int i = 1; i <= World::getWorld()->getCurMaxPlayers(); i++)
 	{
 		Player *p = 0;
 		if (i < World::getWorld()->getCurMaxPlayers()) {
