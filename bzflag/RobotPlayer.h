@@ -56,6 +56,7 @@ class RobotPlayer : public LocalPlayer {
 	void		RobotPlayer::followLeader(float dt);
 	void		RobotPlayer::setNewLeader(float dt);
 
+	bool		RobotPlayer::isGreenTeam(float dt);
 	bool		RobotPlayer::isAttacker(float dt);
 	bool		RobotPlayer::isLeader(float dt);
 	bool		RobotPlayer::haveFlag(float dt);

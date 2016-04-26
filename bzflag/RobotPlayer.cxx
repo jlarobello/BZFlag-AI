@@ -400,11 +400,17 @@ void		RobotPlayer::setNewLeader(float dt)
 
 }
 
+/* is the current robot in green team */
+bool		RobotPlayer::isGreenTeam(float dt)
+{
+	return (getTeam() == TeamColor::GreenTeam);
+}
+
 /* is the current robot an attacker */
 bool		RobotPlayer::isAttacker(float dt)
 {
 	char buffer[128];
-	sprintf(buffer, "%d isAttackers %s", getId(), isAttackers() ? "true" : "false");
+	sprintf(buffer, "%s isAttackers %s", getCallSign(), isAttackers() ? "true" : "false");
 	controlPanel->addMessage(buffer);
 	return isAttackers();
 }
@@ -413,7 +419,7 @@ bool		RobotPlayer::isAttacker(float dt)
 bool		RobotPlayer::isLeader(float dt)
 {
 	char buffer[128];
-	sprintf(buffer, "%d amLeader %s", getId(), amLeader() ? "true" : "false");
+	sprintf(buffer, "%s amLeader %s", getCallSign(), amLeader() ? "true" : "false");
 	controlPanel->addMessage(buffer);
 
 	return amLeader();
@@ -422,23 +428,25 @@ bool		RobotPlayer::isLeader(float dt)
 /* is the current robot have the enemy flag */
 bool		RobotPlayer::haveFlag(float dt)
 {
-	bool enemyFlag = false;
-
-	if ((getFlag()->flagTeam != TeamColor::NoTeam) && (getFlag() != Flags::GreenTeam)) {
-		enemyFlag = true;
-	}
-	else {
-		enemyFlag = false;
-	}
-
-	return enemyFlag;
+	return (isTeamFlag(dt) && !isMyTeamFlag(dt));
 }
 
 /* is the leader of the current robot have the enemy flag */
 bool		RobotPlayer::isLeaderAlive(float dt)
 {
+	bool alive = false;
 
-	return true;
+	for (int i = 0; i <= World::getWorld()->getCurMaxPlayers(); i++)
+	{
+		Player *p = 0;
+		if (i < World::getWorld()->getCurMaxPlayers()) {
+			p = World::getWorld()->getPlayer(i);
+			if (p->getTeam() == TeamColor::GreenTeam && p->amLeader() == true) {
+				alive = p->isAlive();
+			}
+		}
+	}
+	return alive;
 }
 
 /*
