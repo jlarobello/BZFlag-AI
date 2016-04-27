@@ -31,6 +31,7 @@ float InfluenceMap::getInfluence(float x, float y)
 			}
         }
     }
+    
     return influence * 500;
 }
 
