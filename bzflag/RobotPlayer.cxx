@@ -390,19 +390,84 @@ void			RobotPlayer::followPath(float dt)
 /* go to home base */
 void		RobotPlayer::goHomeBase(float dt)
 {
-	
+	TeamColor myteam = getTeam();
+	float goalPos[3];
+
+	findHomeBase(myteam, goalPos);
+
+	AStarNode goalNode(goalPos);
+	if (!paths.empty() && goalNode == pathGoalNode)
+		return; // same goal so no need to plan again
+
+	clock_t start_s = clock();
+	aStarSearch(getPosition(), goalPos, paths);
+	//smoothPath(paths);
+
+	clock_t stop_s = clock();
+	float sum = (float)(stop_s - start_s) / CLOCKS_PER_SEC;
+
+	if (!paths.empty()) {
+		pathGoalNode.setX(paths[0][0].getX());
+		pathGoalNode.setY(paths[0][0].getY());
+		pathIndex = paths[0].size() - 2; // last index is start node
+	}
 }
 
 /* find the enemy flag */
 void		RobotPlayer::findEnemyFlag(float dt)
 {
+	float goalPos[3];
 
+	findOpponentFlag(goalPos);
+
+	AStarNode goalNode(goalPos);
+	if (!paths.empty() && goalNode == pathGoalNode)
+		return; // same goal so no need to plan again
+
+	clock_t start_s = clock();
+	aStarSearch(getPosition(), goalPos, paths);
+	//smoothPath(paths);
+	//std::thread thr(&RobotPlayer::aStarSearch, this, getPosition(), goalPos, paths);
+	clock_t stop_s = clock();
+	float sum = (float)(stop_s - start_s) / CLOCKS_PER_SEC;
+
+	if (!paths.empty()) {
+		pathGoalNode.setX(paths[0][0].getX());
+		pathGoalNode.setY(paths[0][0].getY());
+		pathIndex = paths[0].size() - 2; // last index is start node
+	}
 }
 
 /* follow the team leader */
 void		RobotPlayer::followLeader(float dt)
 {
+	float goalPos[3];
+	
+	for (int i = 0; i < numRobots; i++) {
+		if (robots[i]->getTeam() == TeamColor::GreenTeam && robots[i]->amLeader() == true) {
+			goalPos[0] = robots[i]->getPosition()[0];
+			goalPos[1] = robots[i]->getPosition()[1];
+			goalPos[2] = robots[i]->getPosition()[2];
+			break;
+		}
+	}
 
+	AStarNode goalNode(goalPos);
+	if (!paths.empty() && goalNode == pathGoalNode)
+		return; // same goal so no need to plan again
+
+	clock_t start_s = clock();
+	aStarSearch(getPosition(), goalPos, paths);
+	//smoothPath(paths);
+	//std::thread thr(&RobotPlayer::aStarSearch, this, getPosition(), goalPos, paths);
+	clock_t stop_s = clock();
+	float sum = (float)(stop_s - start_s) / CLOCKS_PER_SEC;
+
+	if (!paths.empty()) {
+		pathGoalNode.setX(paths[0][0].getX());
+		pathGoalNode.setY(paths[0][0].getY());
+		pathIndex = paths[0].size() - 2; // last index is start node
+	}
 }
 
 /* set a new team leader if the cureent leader is dead */
@@ -477,7 +542,6 @@ bool		RobotPlayer::isLeaderAlive(float dt)
 			alive = robots[i]->isAlive();
 		}
 	}
-
 	return alive;
 }
 
@@ -737,7 +801,7 @@ void			RobotPlayer::setTarget(const Player* _target)
   target = _target;
   //if (!target) return;
 
-  aicore::DecisionPtr::runDecisionTree(aicore::DecisionTrees::doAttackDefendDecisions, this, 0);
+  //aicore::DecisionPtr::runDecisionTree(aicore::DecisionTrees::doAttackDefendDecisions, this, 0);
 
   TeamColor myteam = getTeam();
   float goalPos[3];
