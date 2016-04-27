@@ -83,6 +83,7 @@ class RobotPlayer : public LocalPlayer {
 	bool		RobotPlayer::isMyTeamFlag(float dt);
 	void		RobotPlayer::dropFlag(float dt);
 	float		RobotPlayer::getDistance(const float pos1[2], const float pos2[2]);
+    void        RobotPlayer::setCurrentTankToLeader(float dt);
 
   private:
     void		doUpdate(float dt);

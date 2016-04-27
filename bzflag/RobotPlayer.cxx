@@ -534,7 +534,7 @@ void		RobotPlayer::followEnemyAroundBase(float dt)
 	{
 		p = World::getWorld()->getPlayer(i);
 		pos = p->getPosition();
-		if (p->getTeam() != TeamColor::GreenTeam && (getDistance(basepos, pos) <= ((tankradius * 2) * 10)))
+		if (p->getTeam() != TeamColor::GreenTeam && (getDistance(basepos, pos) <= 1000000))
 		{
 			isChasing = true;
 			chasingEnemy = p;
@@ -547,7 +547,7 @@ void		RobotPlayer::followEnemyAroundBase(float dt)
 
 			clock_t start_s = clock();
 			aStarSearch(getPosition(), goalPos, paths);
-			//smoothPath(paths);
+			smoothPath(paths);
 			clock_t stop_s = clock();
 			float sum = (float)(stop_s - start_s) / CLOCKS_PER_SEC;
 
@@ -637,7 +637,7 @@ bool		RobotPlayer::isEnemyAroundBase(float dt)
 		p	= World::getWorld()->getPlayer(i);
 		pos = p->getPosition();
 
-		if (p->getTeam() != TeamColor::GreenTeam
+		if (p != NULL && p->getTeam() != TeamColor::GreenTeam
 			&& (getDistance(basepos, pos) <= ((tankradius*2) * 10)))
 		{
 			isChasing = true;
@@ -1440,7 +1440,7 @@ void		RobotPlayer::aStarSearch(const float startPos[3], const float goalPos[3],
 void RobotPlayer::smoothPath(std::vector< std::vector< AStarNode > >& paths)
 {
 	std::vector< AStarNode > outputPath;
-
+    /*
 	if (paths[0].size() == 2) {
 		outputPath = paths[0];
 	} 
@@ -1461,6 +1461,7 @@ void RobotPlayer::smoothPath(std::vector< std::vector< AStarNode > >& paths)
     {
         
     }
+    */
 }
 
 bool RobotPlayer::rayClear(AStarNode v1, AStarNode v2) {
@@ -1474,6 +1475,17 @@ bool RobotPlayer::rayClear(AStarNode v1, AStarNode v2) {
 	float dist = hypotf(t[0], t[1]);
 
     return ShotStrategy::getFirstBuilding(ray, 0, dist);
+}
+
+void RobotPlayer::setCurrentTankToLeader(float dt)
+{
+    for (int i = 0; i < numRobots; i++) {
+        if (robots[i]->getTeam() == TeamColor::GreenTeam && robots[i]->amLeader() == true) {
+            robots[i]->setLeader(false);
+            break;
+        }
+    }
+    setLeader(true);
 }
 
 // Local Variables: ***

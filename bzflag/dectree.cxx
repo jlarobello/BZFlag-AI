@@ -134,10 +134,15 @@ namespace aicore
 		
 		doUpdateDropFlagDecisions[4].decFuncPtr = &RobotPlayer::isMyTeamFlag;
 		doUpdateDropFlagDecisions[4].trueBranch = &doUpdateDropFlagActions[1];
-		doUpdateDropFlagDecisions[4].falseBranch = &doUpdateDropFlagActions[0];
+		doUpdateDropFlagDecisions[4].falseBranch = &doUpdateDropFlagDecisions[5];
+
+        doUpdateDropFlagDecisions[5].decFuncPtr = &RobotPlayer::isLeader;
+        doUpdateDropFlagDecisions[5].trueBranch = &doUpdateDropFlagActions[0];
+        doUpdateDropFlagDecisions[5].falseBranch = &doUpdateDropFlagActions[2];
 
 		doUpdateDropFlagActions[0].actFuncPtr = &RobotPlayer::doNothing;
 		doUpdateDropFlagActions[1].actFuncPtr = &RobotPlayer::dropFlag;
+        doUpdateDropFlagActions[2].actFuncPtr = &RobotPlayer::setCurrentTankToLeader;
 	
 		//////////////////////////////////////////////////
 
@@ -197,8 +202,8 @@ namespace aicore
 	ActionPtr DecisionTrees::doUpdateMotionActions[3];
 	DecisionPtr DecisionTrees::doUpdateShootingDecisions[6];
 	ActionPtr DecisionTrees::doUpdateShootingActions[3];
-	DecisionPtr DecisionTrees::doUpdateDropFlagDecisions[5];
-	ActionPtr DecisionTrees::doUpdateDropFlagActions[2];
+	DecisionPtr DecisionTrees::doUpdateDropFlagDecisions[6];
+	ActionPtr DecisionTrees::doUpdateDropFlagActions[3];
 
 	//////////////////////////////////////////////////
 	DecisionPtr DecisionTrees::doAttackDefendDecisions[9];
