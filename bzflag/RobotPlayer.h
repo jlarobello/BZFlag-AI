@@ -82,6 +82,7 @@ class RobotPlayer : public LocalPlayer {
 	bool		RobotPlayer::isTeamFlag(float dt);
 	bool		RobotPlayer::isMyTeamFlag(float dt);
 	void		RobotPlayer::dropFlag(float dt);
+	float		RobotPlayer::getDistance(const float pos1[2], const float pos2[2]);
 
   private:
     void		doUpdate(float dt);
@@ -128,6 +129,7 @@ class RobotPlayer : public LocalPlayer {
 	float shotAngle; // azimuth of incoming shot
 	float targetdistance; // distance to target
 	float targetdir[3]; // direction to target
+	bool isChasing = false;
 };
 
 #endif // BZF_ROBOT_PLAYER_H

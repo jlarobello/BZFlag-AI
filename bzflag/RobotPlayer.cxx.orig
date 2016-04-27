@@ -387,87 +387,16 @@ void			RobotPlayer::followPath(float dt)
     }
   }
   
-/* go to home base */
-void		RobotPlayer::goHomeBase(float dt)
+/* defend the enemies */
+void		RobotPlayer::defend(float dt)
 {
-	TeamColor myteam = getTeam();
-	float goalPos[3];
-
-	findHomeBase(myteam, goalPos);
-
-	AStarNode goalNode(goalPos);
-	if (!paths.empty() && goalNode == pathGoalNode)
-		return; // same goal so no need to plan again
-
-	clock_t start_s = clock();
-	aStarSearch(getPosition(), goalPos, paths);
-	//smoothPath(paths);
-
-	clock_t stop_s = clock();
-	float sum = (float)(stop_s - start_s) / CLOCKS_PER_SEC;
-
-	if (!paths.empty()) {
-		pathGoalNode.setX(paths[0][0].getX());
-		pathGoalNode.setY(paths[0][0].getY());
-		pathIndex = paths[0].size() - 2; // last index is start node
-	}
-}
-
-/* find the enemy flag */
-void		RobotPlayer::findEnemyFlag(float dt)
-{
-	float goalPos[3];
-
-	findOpponentFlag(goalPos);
-
-	AStarNode goalNode(goalPos);
-	if (!paths.empty() && goalNode == pathGoalNode)
-		return; // same goal so no need to plan again
-
-	clock_t start_s = clock();
-	aStarSearch(getPosition(), goalPos, paths);
-	//smoothPath(paths);
-	//std::thread thr(&RobotPlayer::aStarSearch, this, getPosition(), goalPos, paths);
-	clock_t stop_s = clock();
-	float sum = (float)(stop_s - start_s) / CLOCKS_PER_SEC;
-
-	if (!paths.empty()) {
-		pathGoalNode.setX(paths[0][0].getX());
-		pathGoalNode.setY(paths[0][0].getY());
-		pathIndex = paths[0].size() - 2; // last index is start node
-	}
+	
 }
 
 /* follow the team leader */
 void		RobotPlayer::followLeader(float dt)
 {
-	float goalPos[3];
-	
-	for (int i = 0; i < numRobots; i++) {
-		if (robots[i]->getTeam() == TeamColor::GreenTeam && robots[i]->amLeader() == true) {
-			goalPos[0] = robots[i]->getPosition()[0];
-			goalPos[1] = robots[i]->getPosition()[1];
-			goalPos[2] = robots[i]->getPosition()[2];
-			break;
-		}
-	}
 
-	AStarNode goalNode(goalPos);
-	if (!paths.empty() && goalNode == pathGoalNode)
-		return; // same goal so no need to plan again
-
-	clock_t start_s = clock();
-	aStarSearch(getPosition(), goalPos, paths);
-	//smoothPath(paths);
-	//std::thread thr(&RobotPlayer::aStarSearch, this, getPosition(), goalPos, paths);
-	clock_t stop_s = clock();
-	float sum = (float)(stop_s - start_s) / CLOCKS_PER_SEC;
-
-	if (!paths.empty()) {
-		pathGoalNode.setX(paths[0][0].getX());
-		pathGoalNode.setY(paths[0][0].getY());
-		pathIndex = paths[0].size() - 2; // last index is start node
-	}
 }
 
 /* set a new team leader if the cureent leader is dead */
@@ -486,27 +415,43 @@ void		RobotPlayer::setNewLeader(float dt)
 	for (int j = 0; j < numRobots; j++) {
 		if (robots[j]->getTeam() == TeamColor::GreenTeam && robots[j]->isAttackers() == true && j != leader) {
 			robots[j]->setLeader(true);
+			char buffer[128];
+			sprintf(buffer, "%s isNewLeader %s", robots[j]->getCallSign(), robots[j]->isAttackers() ? "true" : "false");
+			controlPanel->addMessage(buffer);
 			break;
 		}
 	}
-}
+/*
+	Player *p1 = 0;
 
-/* update the end node of the path to the position of the enemy that's already chasing */
-void		RobotPlayer::followCurrentEnemy(float dt)
-{
+	for (int i = 1; i <= World::getWorld()->getCurMaxPlayers(); i++)
+	{
+		if (i < World::getWorld()->getCurMaxPlayers()) {
+			p1 = World::getWorld()->getPlayer(i);
+			if (p1->getTeam() == TeamColor::GreenTeam && p1->amLeader() == true) {
+				p1->setLeader(false);
+				break;
+			}
+		}
+	}
 
-}
-
-/* set the path to the new enemy */
-void		RobotPlayer::followEnemyAroundBase(float dt)
-{
-
-}
-
-/* set the path to around the base */
-void		RobotPlayer::stayAroundBase(float dt)
-{
-
+	for (int i = 1; i <= World::getWorld()->getCurMaxPlayers(); i++)
+	{
+		Player *p2 = 0;
+		if (i < World::getWorld()->getCurMaxPlayers()) {
+			p2 = World::getWorld()->getPlayer(i);
+			if (p2->getTeam() == TeamColor::GreenTeam && p2 != p1) {
+				if (p2->isAttackers() == true) {
+					char buffer[128];
+					sprintf(buffer, "%s isNewLeader %s", p2->getCallSign(), p2->isAttackers() ? "true" : "false");
+					controlPanel->addMessage(buffer);
+				}
+				p2->setLeader(true);
+				break;
+			}
+		}
+	}
+	*/
 }
 
 /* is the current robot in green team */
@@ -518,6 +463,16 @@ bool		RobotPlayer::isGreenTeam(float dt)
 /* is the current robot an attacker */
 bool		RobotPlayer::isAttacker(float dt)
 {
+	//char buffer[128];
+	//sprintf(buffer, "%s isAttackers %s", getCallSign(), isAttackers() ? "true" : "false");
+	//controlPanel->addMessage(buffer);
+
+	//sprintf(buffer, "%s amLeader %s", getCallSign(), amLeader() ? "true" : "false");
+	//controlPanel->addMessage(buffer);
+
+	//sprintf(buffer, "%s on GreenTeam? %s", getCallSign(), TeamColor::GreenTeam ? "true" : "false");
+	//controlPanel->addMessage(buffer);
+
 	return isAttackers();
 }
 
@@ -537,49 +492,24 @@ bool		RobotPlayer::haveFlag(float dt)
 bool		RobotPlayer::isLeaderAlive(float dt)
 {
 	bool alive = false;
-	for (int i = 0; i < numRobots; i++) {
-		if (robots[i]->getTeam() == TeamColor::GreenTeam && robots[i]->amLeader() == true) {
-			alive = robots[i]->isAlive();
-		}
-	}
-	return alive;
-}
 
-/* is there enemy around the green base */
-bool		RobotPlayer::isEnemyAroundBase(float dt)
-{
-	const float * basepos	= World::getWorld()->getBase(GreenTeam, 0);
-	float tankradius		= BZDBCache::tankRadius;
-	Player * p				= NULL;
-	const float * pos;
-
-	for (int i = 0; i <= World::getWorld()->getCurMaxPlayers(); i++) 
+	for (int i = 1; i <= World::getWorld()->getCurMaxPlayers(); i++)
 	{
-		p	= World::getWorld()->getPlayer(i);
-		pos = p->getPosition();
+		Player *p = 0;
+		if (i < World::getWorld()->getCurMaxPlayers()) {
+			p = World::getWorld()->getPlayer(i);
+			if (p->getTeam() == TeamColor::GreenTeam && p->amLeader() == true) {
+				alive = p->isAlive();
+				alive = false;
 
-		if (p->getTeam() != TeamColor::GreenTeam
-			&& (getDistance(basepos, pos) <= ((tankradius*2) * 10)))
-		{
-			return true;
+				/*char buffer[128];
+				sprintf(buffer, "%s isCurrentLeader %s", p->getCallSign(), p->amLeader() ? "true" : "false");
+				controlPanel->addMessage(buffer);*/
+			}
 		}
 	}
-	return false;
-}
 
-float RobotPlayer::getDistance(const float pos1[2], const float pos2[2])
-{
-	float pos[2];
-	pos[0] = (pos1[0] - pos2[0]);
-	pos[1] = (pos1[1] - pos2[1]);
-
-	return hypotf(pos[0], pos[1]);
-}
-
-/* is the current robot already chasing an enemy */
-bool		RobotPlayer::isAlreadyChasingEnemy(float dt)
-{
-	return true;
+	return alive;
 }
 
 /*
@@ -826,8 +756,6 @@ void			RobotPlayer::setTarget(const Player* _target)
   target = _target;
   //if (!target) return;
 
-  //aicore::DecisionPtr::runDecisionTree(aicore::DecisionTrees::doAttackDefendDecisions, this, 0);
-
   TeamColor myteam = getTeam();
   float goalPos[3];
   if (myTeamHoldingOpponentFlag())
@@ -841,7 +769,15 @@ void			RobotPlayer::setTarget(const Player* _target)
 
   clock_t start_s = clock();
   aStarSearch(getPosition(), goalPos, paths);
+<<<<<<< HEAD
+  smoothPath(paths);
+
+  /* if leader, follow A* search. else, follow endpoint of leader */
+
+
+=======
   //smoothPath(paths);
+>>>>>>> origin/decisions
   //std::thread thr(&RobotPlayer::aStarSearch, this, getPosition(), goalPos, paths);
   clock_t stop_s = clock();
   float sum = (float)(stop_s - start_s) / CLOCKS_PER_SEC;
@@ -850,7 +786,7 @@ void			RobotPlayer::setTarget(const Player* _target)
   sprintf(buffer, "\nA* search took %f seconds", sum);
   controlPanel->addMessage(buffer);
 #endif
-  if (!paths.empty()) {
+  if (!paths.empty()) { 
 	  pathGoalNode.setX(paths[0][0].getX());
 	  pathGoalNode.setY(paths[0][0].getY());
 	  pathIndex = paths[0].size()-2; // last index is start node
@@ -1370,7 +1306,7 @@ void RobotPlayer::smoothPath(std::vector< std::vector< AStarNode > >& paths)
 		while (inputIndex < paths[0].size() - 1) {
 			if (!rayClear(outputPath.at(outputPath.size() - 1),  paths[0].at(inputIndex))) {
 				outputPath.push_back(paths[0].at(inputIndex - 1));
-            }
+			}
 			inputIndex++;
 		}
 	}
@@ -1378,7 +1314,7 @@ void RobotPlayer::smoothPath(std::vector< std::vector< AStarNode > >& paths)
 
     for (int i = 0; i < outputPath.size(); i++)
     {
-        
+
     }
 }
 
@@ -1394,6 +1330,32 @@ bool RobotPlayer::rayClear(AStarNode v1, AStarNode v2) {
 
     return ShotStrategy::getFirstBuilding(ray, 0, dist);
 }
+
+bool		RobotPlayer::isEnemyInBase(float dt) {
+
+}
+
+bool		RobotPlayer::isAlreadyEngaging(float dt) {
+
+}
+void		RobotPlayer::setPathToOrigin(float dt) {
+
+}
+
+void		RobotPlayer::setPathToCurrentEnemy(float dt) {
+
+}
+void		RobotPlayer::setPathToEnemy(float dt) {
+
+}
+void		RobotPlayer::setPathToBase(float dt) {
+
+}
+void		RobotPlayer::setPathToFlag(float dt) {
+
+}
+
+
 
 // Local Variables: ***
 // mode:C++ ***
