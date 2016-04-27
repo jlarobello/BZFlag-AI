@@ -47,7 +47,7 @@ const float RobotPlayer::AlignW = 1.0f;
 const float RobotPlayer::PathW = 10.0f;*/
 
 const float RobotPlayer::CohesionW = 0;
-const float RobotPlayer::SeparationW = 0;
+const float RobotPlayer::SeparationW = 1000.0f;
 const float RobotPlayer::AlignW = 0;
 const float RobotPlayer::PathW = 1;
 
@@ -534,7 +534,7 @@ void		RobotPlayer::followEnemyAroundBase(float dt)
 	{
 		p = World::getWorld()->getPlayer(i);
 		pos = p->getPosition();
-		if (p->getTeam() != TeamColor::GreenTeam && (getDistance(basepos, pos) <= 1000000))
+		if (p->getTeam() != TeamColor::GreenTeam)
 		{
 			isChasing = true;
 			chasingEnemy = p;
@@ -638,7 +638,7 @@ bool		RobotPlayer::isEnemyAroundBase(float dt)
 		pos = p->getPosition();
 
 		if (p != NULL && p->getTeam() != TeamColor::GreenTeam
-			&& (getDistance(basepos, pos) <= ((tankradius*2) * 10)))
+			&& (getDistance(basepos, pos) <= 500))
 		{
 			isChasing = true;
 			chasingEnemy = p;
