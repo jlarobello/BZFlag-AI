@@ -501,6 +501,7 @@ void		RobotPlayer::followCurrentEnemy(float dt)
 void		RobotPlayer::followEnemyAroundBase(float dt)
 {
 
+
 }
 
 /* set the path to around the base */
@@ -561,6 +562,7 @@ bool		RobotPlayer::isEnemyAroundBase(float dt)
 		if (p->getTeam() != TeamColor::GreenTeam
 			&& (getDistance(basepos, pos) <= ((tankradius*2) * 10)))
 		{
+			isChasing = true;
 			return true;
 		}
 	}
@@ -579,7 +581,7 @@ float RobotPlayer::getDistance(const float pos1[2], const float pos2[2])
 /* is the current robot already chasing an enemy */
 bool		RobotPlayer::isAlreadyChasingEnemy(float dt)
 {
-	return true;
+	return isChasing;
 }
 
 /*
