@@ -130,6 +130,7 @@ class RobotPlayer : public LocalPlayer {
 	float targetdistance; // distance to target
 	float targetdir[3]; // direction to target
 	bool isChasing = false;
+	Player * chasingEnemy;
 };
 
 #endif // BZF_ROBOT_PLAYER_H

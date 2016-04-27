@@ -494,20 +494,98 @@ void		RobotPlayer::setNewLeader(float dt)
 /* update the end node of the path to the position of the enemy that's already chasing */
 void		RobotPlayer::followCurrentEnemy(float dt)
 {
+	if (chasingEnemy->isAlive() && isChasing) 
+	{
+		const float * enemyPos = chasingEnemy->getPosition();
+		
+		float goalPos[3];
+		goalPos[0] = enemyPos[0];
+		goalPos[1] = enemyPos[1];
+		goalPos[2] = enemyPos[2];
+		
+		AStarNode goalNode(goalPos);
+		if (!paths.empty() && goalNode == pathGoalNode)
+			return; // same goal so no need to plan again
 
+		clock_t start_s = clock();
+		aStarSearch(getPosition(), goalPos, paths);
+		//smoothPath(paths);
+		clock_t stop_s = clock();
+		float sum = (float)(stop_s - start_s) / CLOCKS_PER_SEC;
+
+		if (!paths.empty()) {
+			pathGoalNode.setX(paths[0][0].getX());
+			pathGoalNode.setY(paths[0][0].getY());
+			pathIndex = paths[0].size() - 2; // last index is start node
+		}
+	}
 }
 
 /* set the path to the new enemy */
 void		RobotPlayer::followEnemyAroundBase(float dt)
 {
+	const float * basepos = World::getWorld()->getBase(GreenTeam, 0);
+	float tankradius = BZDBCache::tankRadius;
+	Player * p = NULL;
+	const float * pos;
+	float goalPos[3];
 
+	for (int i = 0; i <= World::getWorld()->getCurMaxPlayers(); i++)
+	{
+		p = World::getWorld()->getPlayer(i);
+		pos = p->getPosition();
+		if (p->getTeam() != TeamColor::GreenTeam && (getDistance(basepos, pos) <= ((tankradius * 2) * 10)))
+		{
+			isChasing = true;
+			chasingEnemy = p;
+			goalPos[0] = pos[0];
+			goalPos[1] = pos[1];
+			goalPos[2] = pos[2];
+			AStarNode goalNode(goalPos);
+			if (!paths.empty() && goalNode == pathGoalNode)
+				return; // same goal so no need to plan again
 
+			clock_t start_s = clock();
+			aStarSearch(getPosition(), goalPos, paths);
+			//smoothPath(paths);
+			clock_t stop_s = clock();
+			float sum = (float)(stop_s - start_s) / CLOCKS_PER_SEC;
+
+			if (!paths.empty()) {
+				pathGoalNode.setX(paths[0][0].getX());
+				pathGoalNode.setY(paths[0][0].getY());
+				pathIndex = paths[0].size() - 2; // last index is start node
+			}
+			break;
+		}
+	}
 }
 
 /* set the path to around the base */
 void		RobotPlayer::stayAroundBase(float dt)
 {
+	const float * basepos = World::getWorld()->getBase(GreenTeam, 0);
 
+	float goalPos[3];
+	goalPos[0] = basepos[0] + ((BZDBCache::tankRadius) * 4);
+	goalPos[1] = basepos[1] + ((BZDBCache::tankRadius) * 4);
+	goalPos[2] = basepos[2] + ((BZDBCache::tankRadius) * 4);
+
+	AStarNode goalNode(goalPos);
+	if (!paths.empty() && goalNode == pathGoalNode)
+		return; // same goal so no need to plan again
+
+	clock_t start_s = clock();
+	aStarSearch(getPosition(), goalPos, paths);
+	//smoothPath(paths);
+	clock_t stop_s = clock();
+	float sum = (float)(stop_s - start_s) / CLOCKS_PER_SEC;
+
+	if (!paths.empty()) {
+		pathGoalNode.setX(paths[0][0].getX());
+		pathGoalNode.setY(paths[0][0].getY());
+		pathIndex = paths[0].size() - 2; // last index is start node
+	}
 }
 
 /* is the current robot in green team */
@@ -563,6 +641,7 @@ bool		RobotPlayer::isEnemyAroundBase(float dt)
 			&& (getDistance(basepos, pos) <= ((tankradius*2) * 10)))
 		{
 			isChasing = true;
+			chasingEnemy = p;
 			return true;
 		}
 	}
