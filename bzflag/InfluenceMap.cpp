@@ -5,34 +5,37 @@ InfluenceMap::InfluenceMap()
 
 }
 
-int InfluenceMap::getInfluence(int x, int y)
+float InfluenceMap::getInfluence(float x, float y)
 {
-    float floatX, floatY, influence = 0;
+    float influence = 0;
 
-    floatX = x * SCALE;
-    floatY = y * SCALE;
-    const float nodePos[2] = { floatX, floatY };
+    const float nodePos[2] = { x, y };
 
-    for (int i = 0; i <= World::getWorld()->getCurMaxPlayers(); i++)
+    for (int i = 1; i <= World::getWorld()->getCurMaxPlayers(); i++)
     {
         Player * p = NULL;
         const float * pos;   // p's position
-        double distance = 0; // distance between robot and node
+        float distance = 0; // distance between robot and node
 
-        p   = World::getWorld()->getPlayer(i);
-        pos = p->getPosition();
-
-        if (p->getTeam() != TeamColor::GreenTeam)
+        p = World::getWorld()->getPlayer(i);
+        if (p != NULL && p->getTeam() != TeamColor::GreenTeam)
         {
-            distance   = getDistance(pos, nodePos);
-            influence += ((INF / distance) + 1);
+            pos = p->getPosition();
+            distance = getDistance(pos, nodePos);
+            // influence += (distance <= 400) ? ((INFL / distance) + 1) : distance;
+            if (influence <= 0) {
+                influence += INFL / distance + 1;
+            }
+            else {
+                influence += INFL / distance - 1;
+            }
         }
     }
 
-    return (int)influence;
+    return influence * 10;
 }
 
-float InfluenceMap::getDistance(const float pos1[2], const float pos2[2])
+float InfluenceMap::getDistance(const float pos1[3], const float pos2[3])
 {
     float pos[2];
     float distance = 0;

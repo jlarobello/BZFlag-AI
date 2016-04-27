@@ -291,6 +291,8 @@ void			RobotPlayer::followPath(float dt)
 		getId(), pathIndex, (int)paths[0].size());
 	controlPanel->addMessage(buffer);
 #endif
+    if (paths.size() == 0)
+        return;
     if (dt > 0.0  && pathIndex >= 0) {
       float distance;
       float v[2];
