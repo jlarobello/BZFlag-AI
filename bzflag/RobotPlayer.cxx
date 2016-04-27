@@ -1266,7 +1266,7 @@ void RobotPlayer::smoothPath(std::vector< std::vector< AStarNode > >& paths)
 		while (inputIndex < paths[0].size() - 1) {
 			if (!rayClear(outputPath.at(outputPath.size() - 1),  paths[0].at(inputIndex))) {
 				outputPath.push_back(paths[0].at(inputIndex - 1));
-			}
+            }
 			inputIndex++;
 		}
 	}
@@ -1274,7 +1274,7 @@ void RobotPlayer::smoothPath(std::vector< std::vector< AStarNode > >& paths)
 
     for (int i = 0; i < outputPath.size(); i++)
     {
-
+        
     }
 }
 
