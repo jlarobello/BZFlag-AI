@@ -144,10 +144,16 @@ namespace aicore
 		// actions
 		doAttackDefendActions[0].actFuncPtr = &RobotPlayer::doNothing;
 		doAttackDefendActions[1].actFuncPtr = &RobotPlayer::evade;
+
 		doAttackDefendActions[2].actFuncPtr = &RobotPlayer::defend;
 		doAttackDefendActions[3].actFuncPtr = &RobotPlayer::followPath;
+
 		doAttackDefendActions[4].actFuncPtr = &RobotPlayer::followLeader;
 		doAttackDefendActions[5].actFuncPtr = &RobotPlayer::setNewLeader;
+
+		doAttackDefendActions[6].actFuncPtr = &RobotPlayer::followCurrentEnemy;
+		doAttackDefendActions[7].actFuncPtr = &RobotPlayer::followEnemyAroundBase;
+		doAttackDefendActions[8].actFuncPtr = &RobotPlayer::stayAroundBase;
 
 		// decision tree
 		doAttackDefendDecisions[0].decFuncPtr = &RobotPlayer::isGreenTeam;
@@ -164,7 +170,7 @@ namespace aicore
 		
 		doAttackDefendDecisions[3].decFuncPtr = &RobotPlayer::isAttacker;
 		doAttackDefendDecisions[3].trueBranch = &doAttackDefendDecisions[4];
-		doAttackDefendDecisions[3].falseBranch = &doAttackDefendActions[2];
+		doAttackDefendDecisions[3].falseBranch = &doAttackDefendDecisions[7];
 		
 		doAttackDefendDecisions[4].decFuncPtr = &RobotPlayer::isLeader;
 		doAttackDefendDecisions[4].trueBranch = &doAttackDefendDecisions[5];
@@ -177,6 +183,14 @@ namespace aicore
 		doAttackDefendDecisions[6].decFuncPtr = &RobotPlayer::isLeaderAlive;
 		doAttackDefendDecisions[6].trueBranch = &doAttackDefendActions[4];
 		doAttackDefendDecisions[6].falseBranch = &doAttackDefendActions[5];
+
+		doAttackDefendDecisions[7].decFuncPtr = &RobotPlayer::isEnemyAroundBase;
+		doAttackDefendDecisions[7].trueBranch = &doAttackDefendDecisions[8];
+		doAttackDefendDecisions[7].falseBranch = &doAttackDefendActions[8];
+
+		doAttackDefendDecisions[8].decFuncPtr = &RobotPlayer::isAlreadyChasingEnemy;
+		doAttackDefendDecisions[8].trueBranch = &doAttackDefendActions[6];
+		doAttackDefendDecisions[8].falseBranch = &doAttackDefendActions[7];
 	}
 
 	DecisionPtr DecisionTrees::doUpdateMotionDecisions[2];
@@ -187,7 +201,7 @@ namespace aicore
 	ActionPtr DecisionTrees::doUpdateDropFlagActions[2];
 
 	//////////////////////////////////////////////////
-	DecisionPtr DecisionTrees::doAttackDefendDecisions[7];
-	ActionPtr DecisionTrees::doAttackDefendActions[6];
+	DecisionPtr DecisionTrees::doAttackDefendDecisions[9];
+	ActionPtr DecisionTrees::doAttackDefendActions[9];
 	
 }; // end of namespace

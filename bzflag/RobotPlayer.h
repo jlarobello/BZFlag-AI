@@ -55,12 +55,18 @@ class RobotPlayer : public LocalPlayer {
 	void		RobotPlayer::defend(float dt);
 	void		RobotPlayer::followLeader(float dt);
 	void		RobotPlayer::setNewLeader(float dt);
+	void		RobotPlayer::followCurrentEnemy(float dt);
+	void		RobotPlayer::followEnemyAroundBase(float dt);
+	void		RobotPlayer::stayAroundBase(float dt);
 
 	bool		RobotPlayer::isGreenTeam(float dt);
 	bool		RobotPlayer::isAttacker(float dt);
 	bool		RobotPlayer::isLeader(float dt);
 	bool		RobotPlayer::haveFlag(float dt);
 	bool		RobotPlayer::isLeaderAlive(float dt);
+	bool		RobotPlayer::isEnemyAroundBase(float dt);
+	bool		RobotPlayer::isAlreadyChasingEnemy(float dt);
+
 	bool		RobotPlayer::isFiringStatusReady(float dt);
 	bool		RobotPlayer::hasShotTimerElapsed(float dt);
 	bool		RobotPlayer::isShotCloseToTarget(float dt);

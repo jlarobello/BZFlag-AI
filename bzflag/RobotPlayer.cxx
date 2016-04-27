@@ -420,6 +420,24 @@ void		RobotPlayer::setNewLeader(float dt)
 	}
 }
 
+/* update the end node of the path to the position of the enemy that's already chasing */
+void		RobotPlayer::followCurrentEnemy(float dt)
+{
+
+}
+
+/* set the path to the new enemy */
+void		RobotPlayer::followEnemyAroundBase(float dt)
+{
+
+}
+
+/* set the path to around the base */
+void		RobotPlayer::stayAroundBase(float dt)
+{
+
+}
+
 /* is the current robot in green team */
 bool		RobotPlayer::isGreenTeam(float dt)
 {
@@ -456,6 +474,18 @@ bool		RobotPlayer::isLeaderAlive(float dt)
 	}
 
 	return alive;
+}
+
+/* is there enemy around the green base */
+bool		RobotPlayer::isEnemyAroundBase(float dt)
+{
+	return true;
+}
+
+/* is the current robot already chasing an enemy */
+bool		RobotPlayer::isAlreadyChasingEnemy(float dt)
+{
+	return true;
 }
 
 /*
