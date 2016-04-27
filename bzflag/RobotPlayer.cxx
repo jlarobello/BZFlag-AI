@@ -401,7 +401,7 @@ void		RobotPlayer::goHomeBase(float dt)
 
 	clock_t start_s = clock();
 	aStarSearch(getPosition(), goalPos, paths);
-	//smoothPath(paths);
+	smoothPath(paths);
 
 	clock_t stop_s = clock();
 	float sum = (float)(stop_s - start_s) / CLOCKS_PER_SEC;
@@ -426,7 +426,7 @@ void		RobotPlayer::findEnemyFlag(float dt)
 
 	clock_t start_s = clock();
 	aStarSearch(getPosition(), goalPos, paths);
-	//smoothPath(paths);
+	smoothPath(paths);
 	//std::thread thr(&RobotPlayer::aStarSearch, this, getPosition(), goalPos, paths);
 	clock_t stop_s = clock();
 	float sum = (float)(stop_s - start_s) / CLOCKS_PER_SEC;
@@ -458,7 +458,7 @@ void		RobotPlayer::followLeader(float dt)
 
 	clock_t start_s = clock();
 	aStarSearch(getPosition(), goalPos, paths);
-	//smoothPath(paths);
+	smoothPath(paths);
 	//std::thread thr(&RobotPlayer::aStarSearch, this, getPosition(), goalPos, paths);
 	clock_t stop_s = clock();
 	float sum = (float)(stop_s - start_s) / CLOCKS_PER_SEC;
