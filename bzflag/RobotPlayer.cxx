@@ -387,10 +387,16 @@ void			RobotPlayer::followPath(float dt)
     }
   }
   
-/* defend the enemies */
-void		RobotPlayer::defend(float dt)
+/* go to home base */
+void		RobotPlayer::goHomeBase(float dt)
 {
 	
+}
+
+/* find the enemy flag */
+void		RobotPlayer::findEnemyFlag(float dt)
+{
+
 }
 
 /* follow the team leader */

@@ -145,15 +145,15 @@ namespace aicore
 		doAttackDefendActions[0].actFuncPtr = &RobotPlayer::doNothing;
 		doAttackDefendActions[1].actFuncPtr = &RobotPlayer::evade;
 
-		doAttackDefendActions[2].actFuncPtr = &RobotPlayer::defend;
-		doAttackDefendActions[3].actFuncPtr = &RobotPlayer::followPath;
+		doAttackDefendActions[2].actFuncPtr = &RobotPlayer::goHomeBase;
+		doAttackDefendActions[3].actFuncPtr = &RobotPlayer::findEnemyFlag;
 
 		doAttackDefendActions[4].actFuncPtr = &RobotPlayer::followLeader;
 		doAttackDefendActions[5].actFuncPtr = &RobotPlayer::setNewLeader;
 
-		doAttackDefendActions[6].actFuncPtr = &RobotPlayer::followCurrentEnemy;
-		doAttackDefendActions[7].actFuncPtr = &RobotPlayer::followEnemyAroundBase;
-		doAttackDefendActions[8].actFuncPtr = &RobotPlayer::stayAroundBase;
+		doAttackDefendActions[6].actFuncPtr = &RobotPlayer::stayAroundBase;
+		doAttackDefendActions[7].actFuncPtr = &RobotPlayer::followCurrentEnemy;
+		doAttackDefendActions[8].actFuncPtr = &RobotPlayer::followEnemyAroundBase;
 
 		// decision tree
 		doAttackDefendDecisions[0].decFuncPtr = &RobotPlayer::isGreenTeam;
@@ -177,7 +177,7 @@ namespace aicore
 		doAttackDefendDecisions[4].falseBranch = &doAttackDefendDecisions[6];
 
 		doAttackDefendDecisions[5].decFuncPtr = &RobotPlayer::haveFlag;
-		doAttackDefendDecisions[5].trueBranch = &doAttackDefendActions[3];
+		doAttackDefendDecisions[5].trueBranch = &doAttackDefendActions[2];
 		doAttackDefendDecisions[5].falseBranch = &doAttackDefendActions[3];
 
 		doAttackDefendDecisions[6].decFuncPtr = &RobotPlayer::isLeaderAlive;
@@ -186,11 +186,11 @@ namespace aicore
 
 		doAttackDefendDecisions[7].decFuncPtr = &RobotPlayer::isEnemyAroundBase;
 		doAttackDefendDecisions[7].trueBranch = &doAttackDefendDecisions[8];
-		doAttackDefendDecisions[7].falseBranch = &doAttackDefendActions[8];
+		doAttackDefendDecisions[7].falseBranch = &doAttackDefendActions[6];
 
 		doAttackDefendDecisions[8].decFuncPtr = &RobotPlayer::isAlreadyChasingEnemy;
-		doAttackDefendDecisions[8].trueBranch = &doAttackDefendActions[6];
-		doAttackDefendDecisions[8].falseBranch = &doAttackDefendActions[7];
+		doAttackDefendDecisions[8].trueBranch = &doAttackDefendActions[7];
+		doAttackDefendDecisions[8].falseBranch = &doAttackDefendActions[8];
 	}
 
 	DecisionPtr DecisionTrees::doUpdateMotionDecisions[2];

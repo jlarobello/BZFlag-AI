@@ -52,7 +52,9 @@ class RobotPlayer : public LocalPlayer {
 	void		RobotPlayer::doNothing(float dt);
 	void		RobotPlayer::evade(float dt);
 	void		RobotPlayer::followPath(float dt);
-	void		RobotPlayer::defend(float dt);
+
+	void		RobotPlayer::goHomeBase(float dt);
+	void		RobotPlayer::findEnemyFlag(float dt);
 	void		RobotPlayer::followLeader(float dt);
 	void		RobotPlayer::setNewLeader(float dt);
 	void		RobotPlayer::followCurrentEnemy(float dt);
