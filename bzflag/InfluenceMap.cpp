@@ -18,15 +18,19 @@ float InfluenceMap::getInfluence(float x, float y)
         float distance = 0; // distance between robot and node
 
 		p = World::getWorld()->getPlayer(i);
-        
         if (p != NULL && p->getTeam() != TeamColor::GreenTeam)
         {
             pos = p->getPosition();
             distance   = getDistance(pos, nodePos);
-            influence += (distance <= 400) ? ((INFL / distance) + 1) : 0;
+           // influence += (distance <= 400) ? ((INFL / distance) + 1) : distance;
+			if (influence <= 0) {
+				influence += INFL / distance + 1;
+			}
+			else {
+				influence += INFL / distance - 1; 
+			}
         }
     }
-
     return influence * 500;
 }
 
