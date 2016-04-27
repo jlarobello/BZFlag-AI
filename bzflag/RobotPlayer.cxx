@@ -524,7 +524,7 @@ void		RobotPlayer::followCurrentEnemy(float dt)
 /* set the path to the new enemy */
 void		RobotPlayer::followEnemyAroundBase(float dt)
 {
-	const float * basepos = World::getWorld()->getBase(GreenTeam, 0);
+	const float * basepos = World::getWorld()->getBase(TeamColor::GreenTeam, 0);
 	float tankradius = BZDBCache::tankRadius;
 	Player * p = NULL;
 	const float * pos;
@@ -564,7 +564,7 @@ void		RobotPlayer::followEnemyAroundBase(float dt)
 /* set the path to around the base */
 void		RobotPlayer::stayAroundBase(float dt)
 {
-	const float * basepos = World::getWorld()->getBase(GreenTeam, 0);
+	const float * basepos = World::getWorld()->getBase(TeamColor::GreenTeam, 0);
 
 	float goalPos[3];
 	goalPos[0] = basepos[0] + ((BZDBCache::tankRadius) * 4);
@@ -627,7 +627,7 @@ bool		RobotPlayer::isLeaderAlive(float dt)
 /* is there enemy around the green base */
 bool		RobotPlayer::isEnemyAroundBase(float dt)
 {
-	const float * basepos	= World::getWorld()->getBase(GreenTeam, 0);
+	const float * basepos = World::getWorld()->getBase(TeamColor::GreenTeam, 0);
 	float tankradius		= BZDBCache::tankRadius;
 	Player * p				= NULL;
 	const float * pos;
