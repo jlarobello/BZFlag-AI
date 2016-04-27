@@ -472,7 +472,6 @@ bool		RobotPlayer::haveFlag(float dt)
 bool		RobotPlayer::isLeaderAlive(float dt)
 {
 	bool alive = false;
-
 	for (int i = 0; i < numRobots; i++) {
 		if (robots[i]->getTeam() == TeamColor::GreenTeam && robots[i]->amLeader() == true) {
 			alive = robots[i]->isAlive();
@@ -737,6 +736,8 @@ void			RobotPlayer::setTarget(const Player* _target)
   //path.clear();
   target = _target;
   //if (!target) return;
+
+  aicore::DecisionPtr::runDecisionTree(aicore::DecisionTrees::doAttackDefendDecisions, this, 0);
 
   TeamColor myteam = getTeam();
   float goalPos[3];
