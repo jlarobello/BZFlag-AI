@@ -402,6 +402,26 @@ void		RobotPlayer::followLeader(float dt)
 /* set a new team leader if the cureent leader is dead */
 void		RobotPlayer::setNewLeader(float dt)
 {
+	int leader = 0;
+
+	for (int i = 0; i < numRobots; i++) {
+		if (robots[i]->getTeam() == TeamColor::GreenTeam && robots[i]->amLeader() == true) {
+			robots[i]->setLeader(false);
+			leader = i;
+			break;
+		}
+	}
+
+	for (int j = 0; j < numRobots; j++) {
+		if (robots[j]->getTeam() == TeamColor::GreenTeam && robots[j]->isAttackers() == true && j != leader) {
+			robots[j]->setLeader(true);
+			char buffer[128];
+			sprintf(buffer, "%s isNewLeader %s", robots[j]->getCallSign(), robots[j]->isAttackers() ? "true" : "false");
+			controlPanel->addMessage(buffer);
+			break;
+		}
+	}
+/*
 	Player *p1 = 0;
 
 	for (int i = 1; i <= World::getWorld()->getCurMaxPlayers(); i++)
@@ -420,12 +440,18 @@ void		RobotPlayer::setNewLeader(float dt)
 		Player *p2 = 0;
 		if (i < World::getWorld()->getCurMaxPlayers()) {
 			p2 = World::getWorld()->getPlayer(i);
-			if (p2->getTeam() == TeamColor::GreenTeam && p2->isAttackers() == true && p2 != p1) {
+			if (p2->getTeam() == TeamColor::GreenTeam && p2 != p1) {
+				if (p2->isAttackers() == true) {
+					char buffer[128];
+					sprintf(buffer, "%s isNewLeader %s", p2->getCallSign(), p2->isAttackers() ? "true" : "false");
+					controlPanel->addMessage(buffer);
+				}
 				p2->setLeader(true);
 				break;
 			}
 		}
 	}
+	*/
 }
 
 /* is the current robot in green team */
@@ -437,15 +463,15 @@ bool		RobotPlayer::isGreenTeam(float dt)
 /* is the current robot an attacker */
 bool		RobotPlayer::isAttacker(float dt)
 {
-	char buffer[128];
-	sprintf(buffer, "%s isAttackers %s", getCallSign(), isAttackers() ? "true" : "false");
-	controlPanel->addMessage(buffer);
+	//char buffer[128];
+	//sprintf(buffer, "%s isAttackers %s", getCallSign(), isAttackers() ? "true" : "false");
+	//controlPanel->addMessage(buffer);
 
-	sprintf(buffer, "%s amLeader %s", getCallSign(), amLeader() ? "true" : "false");
-	controlPanel->addMessage(buffer);
+	//sprintf(buffer, "%s amLeader %s", getCallSign(), amLeader() ? "true" : "false");
+	//controlPanel->addMessage(buffer);
 
-	sprintf(buffer, "%s on GreenTeam? %s", getCallSign(), TeamColor::GreenTeam ? "true" : "false");
-	controlPanel->addMessage(buffer);
+	//sprintf(buffer, "%s on GreenTeam? %s", getCallSign(), TeamColor::GreenTeam ? "true" : "false");
+	//controlPanel->addMessage(buffer);
 
 	return isAttackers();
 }
@@ -474,9 +500,15 @@ bool		RobotPlayer::isLeaderAlive(float dt)
 			p = World::getWorld()->getPlayer(i);
 			if (p->getTeam() == TeamColor::GreenTeam && p->amLeader() == true) {
 				alive = p->isAlive();
+				alive = false;
+
+				/*char buffer[128];
+				sprintf(buffer, "%s isCurrentLeader %s", p->getCallSign(), p->amLeader() ? "true" : "false");
+				controlPanel->addMessage(buffer);*/
 			}
 		}
 	}
+
 	return alive;
 }
 
@@ -737,7 +769,7 @@ void			RobotPlayer::setTarget(const Player* _target)
 
   clock_t start_s = clock();
   aStarSearch(getPosition(), goalPos, paths);
-  smoothPath(paths);
+  //smoothPath(paths);
   //std::thread thr(&RobotPlayer::aStarSearch, this, getPosition(), goalPos, paths);
   clock_t stop_s = clock();
   float sum = (float)(stop_s - start_s) / CLOCKS_PER_SEC;
