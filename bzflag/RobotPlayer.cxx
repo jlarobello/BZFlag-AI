@@ -442,7 +442,6 @@ void		RobotPlayer::findEnemyFlag(float dt)
 void		RobotPlayer::followLeader(float dt)
 {
 	float goalPos[3];
-    Player p;
 	for (int i = 0; i < numRobots; i++) {
 		if (robots[i]->getTeam() == TeamColor::GreenTeam && robots[i]->amLeader() == true) {
 			goalPos[0] = robots[i]->getPosition()[0];
