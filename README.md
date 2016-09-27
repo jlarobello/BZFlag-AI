@@ -1,6 +1,6 @@
 # BZFlag Green Team AI
 <br>
-BZFlag AI
+BZFlag Tank AI implementation using decision trees, A-Star path finding, and a influence map.
 <br> 
 <br>
 **Installation:**
